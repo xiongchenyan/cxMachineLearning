@@ -17,15 +17,19 @@ class EmpiricalCDFC(object):
         
     def Make(self,lNum):
         lNum.sort()
-        for i in xrange(0,len(lNum),self.InterValNum):
+        InterValSize = math.ceil(float(len(lNum))/self.InterValNum)
+        for i in xrange(0,len(lNum),InterValSize):
             self.lCdfSpliter.append(lNum[i])
             
     def GetCdf(self,num):
         p = 0
         for i in range(len(self.lCdfSpliter)):
-            if num > self.lCdfSpliter[i]:
+            if num >= self.lCdfSpliter[i]:
                 p = i + 1
-                break
+                if i == len(self.lCdfSpliter) - 1:
+                    break
+                if self.lCdfSpliter[i] != self.lCdfSpliter[i+1]:
+                    break
         cdf = min(1.0,1.0/self.InterValNum * p)
         return cdf
     
