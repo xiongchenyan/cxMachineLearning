@@ -21,7 +21,7 @@ class cxKMeansC(object):
         
     def WriteData(self,data):
         #data is a sparse matrix format [i,j,value]
-        out = open(self.workdir + './' + self.DataOut,'w')
+        out = open(self.workdir + '/' + self.DataOut,'w')
         for triple in data:
             print >>out,"%f,%f,%f" %(triple[0],triple[1],triple[2])
         out.close()
