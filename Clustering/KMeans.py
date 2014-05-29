@@ -16,11 +16,18 @@ class cxKMeansC(object):
         
     def __init__(self,workdir="",k=8):
         self.Init()
+        if "" != workdir:
+            self.SetWorkDir(workdir)
+        self.SetK(k)
+        
+    
+    def SetWorkDir(self,workdir):
         self.workdir = workdir
         if not os.path.isdir(self.workdir):
             os.makedirs(self.workdir)
-        self.k = k
         
+    def SetK(self,k):
+        self.k = k
         
     def WriteData(self,data):
         #data is a sparse matrix format [i,j,value]
