@@ -49,7 +49,8 @@ class cxKMeansC(object):
         MatlabCommand.append(FuncCommand)
         Command = ' '.join(MatlabCommand)
         print "calling [%s]" %(Command)
-        os.system(Command)
+        subprocess.check_output(MatlabCommand)
+#         os.system(Command)
         return
     
     
