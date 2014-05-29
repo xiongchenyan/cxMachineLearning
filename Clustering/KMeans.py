@@ -17,6 +17,8 @@ class cxKMeansC(object):
     def __init__(self,workdir="",k=8):
         self.Init()
         self.workdir = workdir
+        if not os.path.isdir(self.workdir):
+            os.mkdir(self.workdir)
         self.k = k
         
         
