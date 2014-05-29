@@ -41,6 +41,8 @@ class EmpiricalCDFC(object):
         vCol = line.split('\t')
         self.InterValNum = int(vCol[0])
         self.lCdfSpliter = json.loads(vCol[1])
+        if self.InterValNum != len(self.lCdfSpliter):
+            return False
         return True
     
     
