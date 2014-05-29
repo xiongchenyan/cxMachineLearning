@@ -11,7 +11,7 @@ class cxKMeansC(object):
         self.workdir = ""
         self.DataOut = 'data'
         self.ResOut = 'data'
-        self.MFuncName = "/bos/usr0/cx/cxMatlab/clustering/cxKMeans.m"
+        self.MFuncName = "/bos/usr0/cx/MatlabCode/cxMatlab/cxKMeans.m"
         
     def __init__(self,workdir="",k=8):
         self.Init()
