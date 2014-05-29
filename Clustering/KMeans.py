@@ -23,7 +23,9 @@ class cxKMeansC(object):
     
     def SetWorkDir(self,workdir):
         self.workdir = workdir
+        print "kmeans mid dir [%s]" %(self.workdir)
         if not os.path.isdir(self.workdir):
+            print "not exist, created"
             os.makedirs(self.workdir)
         
     def SetK(self,k):
