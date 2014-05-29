@@ -10,8 +10,8 @@ class cxKMeansC(object):
         self.k = 8
         self.workdir = ""
         self.DataOut = 'data'
-        self.ResOut = 'data'
-        self.MFuncName = "/bos/usr0/cx/MatlabCode/cxMatlab/cxKMeans.m"
+        self.ResOut = 'res'
+        self.MFuncName = "cxKMeans"
         
     def __init__(self,workdir="",k=8):
         self.Init()
@@ -37,7 +37,7 @@ class cxKMeansC(object):
     
     def CallMatlab(self):
         MatlabCommand = ['matlab_7.13', '-nodisplay', '-nodesktop', '-nojvm', '-nosplash', '-r']
-        FuncCommand = "%s %s %s %d" %(self.MFuncName,self.workdir + '/' + self.DataOut,
+        FuncCommand = "\"%s %s %s %d\"" %(self.MFuncName,self.workdir + '/' + self.DataOut,
                                    self.workdir + '/' + self.ResOut,self.k)
         MatlabCommand.append(FuncCommand)
         print "calling [%s]" %(json.dumps(MatlabCommand))
