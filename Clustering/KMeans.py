@@ -4,6 +4,7 @@ call matlab for kmeans
 @author: cx
 '''
 import subprocess
+import os
 import json
 class cxKMeansC(object):
     def Init(self):
@@ -36,14 +37,19 @@ class cxKMeansC(object):
         return lLabel
     
     def CallMatlab(self):
-        MatlabCommand = ['matlab_7.13', '-nodisplay', '-nodesktop', '-nojvm', '-nosplash', '-r']
+        MatlabCommand = ['/opt/matlab/7.13/bin/matlab',
+                          '-nodisplay', 
+                          '-nodesktop',
+                           '-nojvm', 
+                           '-nosplash',
+                           '-singleCompThread',
+                            '-r']
         FuncCommand = "\"%s %s %s %d\"" %(self.MFuncName,self.workdir + '/' + self.DataOut,
                                    self.workdir + '/' + self.ResOut,self.k)
         MatlabCommand.append(FuncCommand)
-        print "calling [%s]" %(json.dumps(MatlabCommand))
-        Output = subprocess.check_output(MatlabCommand)
-        print "get output [%s]" %(Output)
-        
+        Command = ' '.join(MatlabCommand)
+        print "calling [%s]" %(Command)
+        os.system(Command)
         return
     
     
