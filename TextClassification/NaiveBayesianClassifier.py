@@ -62,7 +62,7 @@ class NaiveBayesianClassifierC(cxBaseC):
     def DiscardLowFreqTerm(self):
         for Lm in self.lLm:
             hNew = dict(Lm.hTermTF)
-            for item,value in hNew:
+            for item,value in hNew.items():
                 if value < 2:
                     del Lm.hTermTF[item]
             Lm.CalcLen()
