@@ -65,6 +65,7 @@ class NaiveBayesianClassifierC(cxBaseC):
             for item,value in hNew.items():
                 if value < 2:
                     del Lm.hTermTF[item]
+            print "reduce from [%d] to [%d]" %(len(hNew),len(Lm.hTermTF))
             Lm.CalcLen()
     
     
@@ -72,6 +73,7 @@ class NaiveBayesianClassifierC(cxBaseC):
     def dump(self,OutName):
         out = open(OutName,'w')
         for i in range(len(self.lDomain)):
+            print "start dumping [%s]" %(self.lDomain[i])
             print >>out, self.lDomain[i] + '\t' + self.lLm[i].dumps()
         out.close()
         return
@@ -87,7 +89,9 @@ class NaiveBayesianClassifierC(cxBaseC):
             lm = LmBaseC()
             lm.loads('\t'.join(vCol[1:]))
             self.lLm.append(lm)
+            print "load lm [%s] [%d]" %(vCol[0],len(lm.hTermTF))
         if self.bReduceSize:
+            print "start reduce size"
             self.ReduceSize()
         return
     
