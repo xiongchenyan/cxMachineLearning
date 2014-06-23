@@ -109,7 +109,8 @@ class NaiveBayesianClassifierC(cxBaseC):
                 
         Total = sum(lProb)
         if 0 == Total:
-            return [1.0/len(self.lDomain)] * len(self.lDomain)
+            print "text [%s] get no match at all in NB classifier" %(text)
+            return self.lDomain, [1.0/len(self.lDomain)] * len(self.lDomain)
         
         lProb = [item/Total for item in lProb]
         return self.lDomain,lProb
