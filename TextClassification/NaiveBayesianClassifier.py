@@ -98,9 +98,9 @@ class NaiveBayesianClassifierC(cxBaseC):
             lm.loads('\t'.join(vCol[1:]))
             self.lLm.append(lm)
             print "load lm [%s] [%d]" %(vCol[0],len(lm.hTermTF))
-        if self.bReduceSize:
-            print "start reduce size"
-            self.ReduceSize()
+#         if self.bReduceSize:
+#             print "start reduce size"
+#             self.ReduceSize()
         return
     
     
