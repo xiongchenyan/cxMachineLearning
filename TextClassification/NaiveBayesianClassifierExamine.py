@@ -30,7 +30,7 @@ for i in range(len(NbClassifier.lLm)):
         prob = lProb[i]
         lThisClassTerm.append([term,prob])
     lThisClassTerm.sort(key=lambda item:item[1],reverse = True)
-    lMid =[item[0] + ':%f'%(item[1]) for item in lThisClassTerm]
+    lMid =[item[0] + ':%.2f'%(item[1]) for item in lThisClassTerm]
     res += '\t' + '\t'.join(lMid[:20])
     print >>out, res
     
