@@ -36,23 +36,31 @@ class NaiveBayesianClassifierC(cxBaseC):
             if len(vCol) < 2:
                 continue
             cate = self.CateLoader(vCol[0])
-            if cate in self.lStopDomain:
-                continue
-            text = TextBaseC.RawClean(vCol[1])
-            if not cate in self.hDomain:
-                p = len(self.lDomain)
-                self.lDomain.append(cate)
-                self.lLm.append(LmBaseC())
-                self.hDomain[cate] = p
-            else:
-                p = self.hDomain[cate]
-            self.lLm[p].AddRawText(text)       
+            text = vCol[1]
+            self.AddTrainText(cate, text)       
             cnt += 1
             if 0 == (cnt % 1000):
                 print "[%d] line [%d] cate" %(cnt,len(self.lDomain)) 
         if self.bReduceSize:
             self.ReduceSize()
         return True
+    
+    
+    def AddTrainText(self,cate,text):
+        if cate in self.lStopDomain:
+            continue
+        text = TextBaseC.RawClean(text)
+        if not cate in self.hDomain:
+            p = len(self.lDomain)
+            self.lDomain.append(cate)
+            self.lLm.append(LmBaseC())
+            self.hDomain[cate] = p
+        else:
+            p = self.hDomain[cate]
+        self.lLm[p].AddRawText(text)
+        return True          
+    
+    
     
     
     def ReduceSize(self):

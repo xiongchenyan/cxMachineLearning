@@ -19,6 +19,5 @@ if 3 != len(sys.argv):
     
     
 NbClassifier = NaiveBayesianClassifierC()
-
 NbClassifier.load(sys.argv[1])
 NbClassifier.dump(sys.argv[2])
