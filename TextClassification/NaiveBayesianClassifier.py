@@ -107,9 +107,7 @@ class NaiveBayesianClassifierC(cxBaseC):
     def Predict(self,text):
         #add one smoothing
         lProb = [0] * len(self.lDomain)
-        lTerm = TextBaseC.RawClean(text).split()
-        Sum = 0
-        
+        lTerm = TextBaseC.RawClean(text).split()        
         for term in lTerm:
             for i in range(len(self.lLm)):
                 prob = self.lLm[i].GetTFProb(term)
