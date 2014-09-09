@@ -73,7 +73,7 @@ class NaiveBayesianClassifierC(cxBaseC):
             for item,value in hNew.items():
                 if value < 2:
                     del Lm.hTermTF[item]
-            print "reduce from [%d] to [%d]" %(len(hNew),len(Lm.hTermTF))
+#             print "reduce from [%d] to [%d]" %(len(hNew),len(Lm.hTermTF))
             Lm.CalcLen()
     
     
