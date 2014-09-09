@@ -22,7 +22,7 @@ NbClassifier.load(sys.argv[1])
 
 out = open(sys.argv[2],'w')
 
-for i in len(NbClassifier.lLm):
+for i in range(len(NbClassifier.lLm)):
     res = NbClassifier.lDomain[i]
     lThisClassTerm = []
     for term in NbClassifier.lLm[i].hTermTF.keys():
