@@ -48,7 +48,7 @@ class NaiveBayesianClassifierC(cxBaseC):
     
     def AddTrainText(self,cate,text):
         if cate in self.lStopDomain:
-            continue
+            return
         text = TextBaseC.RawClean(text)
         if not cate in self.hDomain:
             p = len(self.lDomain)
