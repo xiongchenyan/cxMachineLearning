@@ -1,0 +1,106 @@
+'''
+Created on Nov 17, 2014 3:04:39 PM
+@author: cx
+
+what I do:
+I call external SVM (SVMLight) multi class classifier
+and pretrained models to classify text
+what's my input:
+SVM classifier path
+SVM pre trained model path
+SVM term hash dict (pickle dump of term->id)
+text to classify
+middirectory to dump data
+what's my output:
+llScore, the Score of each text belong to classes
+'''
+
+import site
+site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
+site.addsitedir('/bos/usr0/cx/PyCode/cxMachineLearning')
+
+from cxBase.base import cxBaseC
+from cxBase.Conf import cxConfC
+import pickle,json
+import random
+import subprocess
+import shutil
+class ExtSVMMultiClassifierC(cxBaseC):
+    def Init(self):
+        self.SVMClassPath = "/bos/usr0/cx/SVMLight/svm_multiclass_classify"
+        self.SVMModel = '/bos/usr0/cx/SVMLight/FbTypeModel'
+        self.TempDir = '/bos/usr0/cx/SVMLight/temp/'
+        self.TermHashName = ""
+        self.hTermId = {}
+        self.ThisTempName = ""   #the temp name for each file
+        
+    def SetConf(self, ConfIn):
+        cxBaseC.SetConf(self, ConfIn)
+        self.SVMClassPath = self.conf.GetConf('svmpath', self.SVMClassPath)
+        self.SVMModel = self.conf.GetConf('svmmodel', self.SVMModel)
+        self.TempDir = self.conf.GetConf('tempdir', self.TempDir)
+        self.TermHashName = self.conf.GetConf('termhashin')
+        self.hTermId = pickle.load(open(self.TermHashName))
+        
+    @staticmethod
+    def ShowConf():
+        cxBaseC.ShowConf()
+        print "svmpath\nsvmmodel\ntermpdir\ntermhashin"
+        
+        
+    def TransferTextToSVMFormat(self,text):
+        lTerm = text.split()
+        hFeature = {}
+        for term in lTerm:
+            if not term in self.hTermId:
+                continue
+            key = self.hTermId[term]
+            if not key in hFeature:
+                hFeature[key] = 1
+            else:
+                hFeature[key] += 1
+        lFItem = hFeature.items()
+        lFItem.sort(key=lambda item:item[0])
+        lF = ['%d:%d' %(item[0],item[1]) for item in lFItem ]
+        res = '0 ' + ' '.join(lF)
+        return res
+    
+    def GenerateTempName(self,lText):
+        name = ""
+        for text in lText:
+            name += text[random.randint(0,len(text))]
+        self.ThisTempName = self.TermHashName + '/' + name
+        return self.ThisTempName
+    
+    def MakeSVMData(self,lText):
+        out = open(self.ThisTempName,'w')
+        lData = [self.TransferTextToSVMFormat(text) for text in lText]
+        print >>out, '\n'.join(lData)
+        out.close()
+        
+    def Predict(self):
+        self.PredictOut=self.ThisTempName + '_pred'
+        lCmd = [self.SVMClassPath,self.ThisTempName,self.SVMModel,self.PredictOut]
+        print 'svm running: %s' %(json.dumps(lCmd))
+        subprocess.check_output(lCmd)
+        lLines = open(self.PredictOut).read().split('\n')
+        lClass = [line.split()[0] for line in lLines]
+        llProb = [[float(weight) for weight in line.split()[1:]] for line in lLines]
+        return lClass,llProb
+    def Clean(self):
+        shutil.rmtree(self.ThisTempName)
+        shutil.rmtree(self.PredictOut)
+        
+        
+    def ClassifyData(self,lText):
+        self.GenerateTempName(lText)
+        self.MakeSVMData(lText)
+        lClass,llProb = self.Predict()
+#         self.Clean()
+        return lClass,llProb
+    
+        
+         
+        
+    
+
