@@ -67,16 +67,17 @@ class ExtSVMMultiClassifierC(cxBaseC):
         lFItem = hFeature.items()
         lFItem.sort(key=lambda item:item[0])
         lF = ['%d:%d' %(item[0],item[1]) for item in lFItem]
-        res = '0 ' + ' '.join(lF)
+        res = '1 ' + ' '.join(lF)
         return res
     
     def GenerateTempName(self,lText):
         name = "tmp_%d" %(random.randint(0,10000))
         for text in lText[:30]:
-            if len(text) == 0:
-                print "get an empty text, error"
             mid = TextBaseC.DiscardNonAlphaNonDigit(text.replace(' ','').replace('\t',''))
+            if len(mid) == 0:
+                continue
             name += mid[random.randint(0,len(mid)-1)]
+        name = name.replace(' ','')
         self.ThisTempName = self.TempDir + '/' + name
         return self.ThisTempName
     
