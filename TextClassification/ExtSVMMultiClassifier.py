@@ -75,9 +75,9 @@ class ExtSVMMultiClassifierC(cxBaseC):
         for text in lText[:30]:
             if len(text) == 0:
                 print "get an empty text, error"
-            mid = TextBaseC.DiscardNonAlphaNonDigit(text.replace(' ',''))
+            mid = TextBaseC.DiscardNonAlphaNonDigit(text.replace(' ','').replace('\t',''))
             name += mid[random.randint(0,len(mid)-1)]
-        self.ThisTempName = self.TermHashName + '/' + name
+        self.ThisTempName = self.TempDir + '/' + name
         return self.ThisTempName
     
     def MakeSVMData(self,lText):
