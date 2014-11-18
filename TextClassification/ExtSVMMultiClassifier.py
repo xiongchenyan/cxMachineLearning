@@ -39,7 +39,7 @@ class ExtSVMMultiClassifierC(cxBaseC):
         cxBaseC.SetConf(self, ConfIn)
         self.SVMClassPath = self.conf.GetConf('svmpath', self.SVMClassPath)
         self.SVMModel = self.conf.GetConf('svmmodel', self.SVMModel)
-        self.TempDir = self.conf.GetConf('tempdir', self.TempDir)
+        self.TempDir = self.conf.GetConf('tempdir', self.TempDir) + '/'
         if not os.path.exits(self.TempDir):
             os.makedirs(self.TempDir)
         self.TermHashName = self.conf.GetConf('termhashin',self.TermHashName)
