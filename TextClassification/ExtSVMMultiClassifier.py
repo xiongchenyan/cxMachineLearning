@@ -40,7 +40,7 @@ class ExtSVMMultiClassifierC(cxBaseC):
         self.SVMClassPath = self.conf.GetConf('svmpath', self.SVMClassPath)
         self.SVMModel = self.conf.GetConf('svmmodel', self.SVMModel)
         self.TempDir = self.conf.GetConf('tempdir', self.TempDir) + '/'
-        if not os.path.exits(self.TempDir):
+        if not os.path.exists(self.TempDir):
             os.makedirs(self.TempDir)
         self.TermHashName = self.conf.GetConf('termhashin',self.TermHashName)
         self.hTermId = pickle.load(open(self.TermHashName))
