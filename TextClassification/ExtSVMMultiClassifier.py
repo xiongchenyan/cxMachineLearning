@@ -24,13 +24,14 @@ from cxBase.Conf import cxConfC
 import pickle,json
 import random
 import subprocess
+import os
 import shutil
 class ExtSVMMultiClassifierC(cxBaseC):
     def Init(self):
         self.SVMClassPath = "/bos/usr0/cx/SVMLight/svm_multiclass_classify"
         self.SVMModel = '/bos/usr0/cx/SVMLight/FbTypeModel'
         self.TempDir = '/bos/usr0/cx/SVMLight/temp/'
-        self.TermHashName = ""
+        self.TermHashName = "/bos/usr0/cx/SVMLight/FbTypeTermHash"
         self.hTermId = {}
         self.ThisTempName = ""   #the temp name for each file
         
@@ -39,13 +40,15 @@ class ExtSVMMultiClassifierC(cxBaseC):
         self.SVMClassPath = self.conf.GetConf('svmpath', self.SVMClassPath)
         self.SVMModel = self.conf.GetConf('svmmodel', self.SVMModel)
         self.TempDir = self.conf.GetConf('tempdir', self.TempDir)
-        self.TermHashName = self.conf.GetConf('termhashin')
+        if not os.path.exits(self.TempDir):
+            os.makedirs(self.TempDir)
+        self.TermHashName = self.conf.GetConf('termhashin',self.TermHashName)
         self.hTermId = pickle.load(open(self.TermHashName))
         
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print "svmpath\nsvmmodel\ntermpdir\ntermhashin"
+        print "svmpath\nsvmmodel\ntempdir\ntermhashin"
         
         
     def TransferTextToSVMFormat(self,text):
