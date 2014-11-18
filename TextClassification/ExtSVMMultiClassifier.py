@@ -83,8 +83,8 @@ class ExtSVMMultiClassifierC(cxBaseC):
     
     def MakeSVMData(self,lText):
         out = open(self.ThisTempName,'w')
-        lData = [self.TransferTextToSVMFormat(text) for text in lText]
-        print >>out, '\n'.join(lData)
+        for text in lText:
+            print >>out,self.TransferTextToSVMFormat(text)
         out.close()
         
     def Predict(self):
@@ -97,6 +97,7 @@ class ExtSVMMultiClassifierC(cxBaseC):
         lLines = [line.strip() for line in lLines if line.strip() != ""]
         lClass = [line.split()[0] for line in lLines]
         llProb = [[float(weight) for weight in line.split()[1:]] for line in lLines]
+        del lLines[:]
         return lClass,llProb
     def Clean(self):
         shutil.rmtree(self.ThisTempName)
