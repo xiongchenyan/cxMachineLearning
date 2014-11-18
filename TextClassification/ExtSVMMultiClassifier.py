@@ -93,8 +93,8 @@ class ExtSVMMultiClassifierC(cxBaseC):
         print 'svm running: %s' %(json.dumps(lCmd))
         subprocess.check_output(lCmd)
         print "reading predicted output from [%s]" %(self.PredictOut)
-        lLines = open(self.PredictOut).read().split('\n')
-        print json.dumps(lLines)
+#         lLines = open(self.PredictOut).readlines()
+        lLines = [line.strip() for line in lLines if line.strip() != ""]
         lClass = [line.split()[0] for line in lLines]
         llProb = [[float(weight) for weight in line.split()[1:]] for line in lLines]
         return lClass,llProb
