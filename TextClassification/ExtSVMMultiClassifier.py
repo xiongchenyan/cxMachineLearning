@@ -26,6 +26,7 @@ import random
 import subprocess
 import os
 import shutil
+from cxBase.TextBase import TextBaseC
 class ExtSVMMultiClassifierC(cxBaseC):
     def Init(self):
         self.SVMClassPath = "/bos/usr0/cx/SVMLight/svm_multiclass_classify"
@@ -41,6 +42,7 @@ class ExtSVMMultiClassifierC(cxBaseC):
         self.SVMModel = self.conf.GetConf('svmmodel', self.SVMModel)
         self.TempDir = self.conf.GetConf('tempdir', self.TempDir) + '/'
         if not os.path.exists(self.TempDir):
+            print "creating dir [%s]" %(self.TempDir)
             os.makedirs(self.TempDir)
         self.TermHashName = self.conf.GetConf('termhashin',self.TermHashName)
         self.hTermId = pickle.load(open(self.TermHashName))
@@ -73,7 +75,8 @@ class ExtSVMMultiClassifierC(cxBaseC):
         for text in lText[:30]:
             if len(text) == 0:
                 print "get an empty text, error"
-            name += text[random.randint(0,len(text)-1)]
+            mid = TextBaseC.DiscardNonAlphaNonDigit(text.replace(' ',''))
+            name += mid[random.randint(0,len(mid)-1)]
         self.ThisTempName = self.TermHashName + '/' + name
         return self.ThisTempName
     
