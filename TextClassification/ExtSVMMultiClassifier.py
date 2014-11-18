@@ -71,7 +71,9 @@ class ExtSVMMultiClassifierC(cxBaseC):
     def GenerateTempName(self,lText):
         name = ""
         for text in lText:
-            name += text[random.randint(0,len(text))]
+            if len(text) == 0:
+                print "get an empty text, error"
+            name += text[random.randint(0,len(text)-1)]
         self.ThisTempName = self.TermHashName + '/' + name
         return self.ThisTempName
     
