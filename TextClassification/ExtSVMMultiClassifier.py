@@ -78,6 +78,7 @@ class ExtSVMMultiClassifierC(cxBaseC):
                 continue
             name += mid[random.randint(0,len(mid)-1)]
         name = name.replace(' ','')
+        name = name.encode('ascii','ignore')
         self.ThisTempName = self.TempDir + '/' + name
         return self.ThisTempName
     
