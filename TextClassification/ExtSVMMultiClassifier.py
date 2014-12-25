@@ -106,6 +106,7 @@ class ExtSVMMultiClassifierC(cxBaseC):
         
         
     def ClassifyData(self,lText):
+        lText = [text.encode('ascii','ignore') for text in lText]
         self.GenerateTempName(lText)
         self.MakeSVMData(lText)
         lClass,llProb = self.Predict()
