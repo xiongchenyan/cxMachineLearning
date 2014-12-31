@@ -43,7 +43,10 @@ class ExtSVMMultiClassifierC(cxBaseC):
         self.TempDir = self.conf.GetConf('tempdir', self.TempDir) + '/'
         if not os.path.exists(self.TempDir):
             print "creating dir [%s]" %(self.TempDir)
-            os.makedirs(self.TempDir)
+            try:
+                os.makedirs(self.TempDir)
+            except OSError:
+                print "create dir race condition, but its OK "
         self.TermHashName = self.conf.GetConf('termhashin',self.TermHashName)
         self.hTermId = pickle.load(open(self.TermHashName))
         
