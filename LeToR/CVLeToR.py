@@ -18,6 +18,7 @@ from LeToR.LeToRDataBase import LeToRDataBaseC
 from cxBase.base import cxBaseC
 from cxBase.Conf import cxConfC
 # from SemanticRankEvaluate.SemanticRankEvaluator import *
+from AdhocEva.AdhocEva import AdhocEvaC
 import subprocess
 import os
 
