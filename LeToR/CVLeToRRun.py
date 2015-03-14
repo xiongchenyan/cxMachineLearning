@@ -12,7 +12,7 @@ What's my output:
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
 site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
-site.addsitedir('/bos/usr0/cx/PyCode/SemanticSearch')
+site.addsitedir('/bos/usr0/cx/PyCode/cxMachineLearning')
 
 from LeToR.CVRankSVM import CVRankSVMC
 from LeToR.CVLeToR import CVLeToRC

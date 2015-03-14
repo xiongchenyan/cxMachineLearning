@@ -13,11 +13,11 @@ a final evaluation result
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
 site.addsitedir('/bos/usr0/cx/PyCode/SemanticSearch')
-
+site.addsitedir('/bos/usr0/cx/PyCode/cxMachineLearning')
 from LeToR.LeToRDataBase import LeToRDataBaseC
 from cxBase.base import cxBaseC
 from cxBase.Conf import cxConfC
-from SemanticRankEvaluate.SemanticRankEvaluator import *
+# from SemanticRankEvaluate.SemanticRankEvaluator import *
 import subprocess
 import os
 
