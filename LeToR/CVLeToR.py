@@ -19,6 +19,7 @@ from cxBase.base import cxBaseC
 from cxBase.Conf import cxConfC
 # from SemanticRankEvaluate.SemanticRankEvaluator import *
 from AdhocEva.AdhocEva import AdhocEvaC
+from AdhocEva.AdhocMeasure import AdhocMeasureC
 import subprocess
 import os
 
@@ -32,7 +33,7 @@ class CVLeToRC(cxBaseC):
         self.Evaluator = AdhocEvaC()
         self.BaseLineEva = ""
         self.OutName = ""
-        self.hQidQuery = {}
+#         self.hQidQuery = {}
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
@@ -41,7 +42,7 @@ class CVLeToRC(cxBaseC):
         self.BaseLineEva = self.conf.GetConf('baselineeva')
         self.OutName = self.conf.GetConf('out')
         StemQIn = self.conf.GetConf('queryin')
-        self.hQidQuery = dict([line.split('\t') for line in open(StemQIn).read().splitlines()])
+#         self.hQidQuery = dict([line.split('\t') for line in open(StemQIn).read().splitlines()])
         if not os.path.exists(self.WorkDir):
             os.makedirs(self.WorkDir)
         self.Evaluator.SetConf(ConfIn)
@@ -95,8 +96,8 @@ class CVLeToRC(cxBaseC):
     def Evaluate(self):
         lPerQEva = []
         for qid,lDocNo in self.lQDocRank:
-            query = self.hQidQuery[str(qid)]
-            ThisEva = self.Evaluator.EvaluatePerQ(qid, query, lDocNo)
+#             query = self.hQidQuery[str(qid)]
+            ThisEva = self.Evaluator.EvaluatePerQ(qid, "", lDocNo)
             lPerQEva.append([qid,ThisEva])
         lBaseEva = AdhocMeasureC.ReadPerQEva(self.BaseLineEva, False)
         lBaseEva = [[str(item[0]),item[1]] for item in lBaseEva]
