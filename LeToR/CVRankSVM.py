@@ -18,8 +18,18 @@ class CVRankSVMC(CVLeToRC):
     
     def Init(self):
         CVLeToRC.Init(self)
-        self.lModelTrainCmd = ['/bos/usr0/cx/SVMLight/svm_rank_learn','-c','0.001']
+        self.C = 0.001
+        self.lModelTrainCmd = ['/bos/usr0/cx/SVMLight/svm_rank_learn','-c']
         self.lModelTestCmd = ['/bos/usr0/cx/SVMLight/svm_rank_classify']
+        
+    def SetConf(self, ConfIn):
+        CVLeToRC.SetConf(self, ConfIn)
+        self.C = float(self.conf.GetConf('c', self.C))
+        self.lModelTrainCmd.append('%f' %(self.C))
+        
+        
+        
+    
     def ReadData(self):
         lLines = open(self.In).read().splitlines()
         self.lData = [LeToRDataBaseC(line) for line in lLines]
