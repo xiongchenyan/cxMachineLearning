@@ -21,7 +21,7 @@ import sys
 from cxBase.Conf import cxConfC
 
 if 2 != len(sys.argv):
-    CVLeToRC.ShowConf()
+    CVRankSVMC.ShowConf()
     print 'model ranksvm'
     sys.exit()
     

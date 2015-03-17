@@ -27,7 +27,10 @@ class CVRankSVMC(CVLeToRC):
         self.C = float(self.conf.GetConf('c', self.C))
         self.lModelTrainCmd.append('%f' %(self.C))
         
-        
+    @staticmethod
+    def ShowConf():
+        CVLeToRC.ShowConf()    
+        print 'c'
         
     
     def ReadData(self):
