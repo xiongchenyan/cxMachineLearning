@@ -6,7 +6,7 @@ what I do:
 I submit jobs for each fold + parameter pair
 
 the job will get the CV results on the fold with given parameter
-job must take 3 para: in + para str (json) + out
+job must take 3 para: in + para str (json) + out(the evaluation result)
 
 
 the parameter is packed into a json string
