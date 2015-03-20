@@ -14,6 +14,7 @@ site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
 site.addsitedir('/bos/usr0/cx/PyCode/SemanticSearch')
 from LeToR.CVLeToR import *
 import json
+import logging
 class CVRankSVMC(CVLeToRC):
     
     def Init(self):
@@ -81,3 +82,69 @@ class CVRankSVMC(CVLeToRC):
             lDocRank = [item[0] for item in lDocScore]
             self.lQDocRank.append([qid,lDocRank])
         return
+    
+        
+    def RunWithGivenPara(self,InName,ParaStr,EvaOutName):
+        if not self.SetByGivenPara(InName, ParaStr, EvaOutName):
+            return
+        logging.info('argv set successfully for input [%s]',InName)
+        
+        self.Process()
+        logging.info('process finished, start collectting results')
+        
+        lLines = open(EvaOutName + '_full_eva').read().splitlines()
+        
+        MeanErr = float(lLines[-1].split()[-1])
+        logging.info('mean err [%f]',MeanErr)
+        return MeanErr
+        
+        
+        
+        
+        
+        
+        
+    def SetByGivenPara(self,InName,ParaStr,EvaOutName):
+        self.In = InName
+        self.WorkDir = self.In + '_workdir/'
+        if not os.path.exists(self.WorkDir):
+            os.mkdir(self.WorkDir)
+            
+        self.OutName = EvaOutName + '_full_eva'
+        
+        hPara = json.loads(ParaStr)
+        if type(hPara) != dict:
+            logging.error('para str [%s] no dict type',ParaStr)
+            return False
+        
+        if not 'c' in hPara:
+            logging.error('c not in para str [%s]',ParaStr)
+            return False
+        self.C = float(hPara['c'])
+        return True
+        
+        
+
+
+if __name__ =='__main__':
+    import sys
+    if len(sys.argv) == 2:
+        processor = CVRankSVMC(sys.argv[1])
+        processor.Process()
+        logging.info('run by conf done')
+        sys.exit()
+        
+    if len(sys.argv) == 4:
+        processor = CVRankSVMC()
+        processor.RunWithGivenPara(sys.argv[1], sys.argv[2], sys.argv[3])
+        logging.info('run by give para done')
+        sys.exit()
+        
+    print "two ways to run me:"
+    print "1 argv: the conf file"
+    CVRankSVMC.ShowConf()
+    print "3 argv: run by cmds InName, parastr (json format), evaout name (one single score)"
+                
+            
+            
+            

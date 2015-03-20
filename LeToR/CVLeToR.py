@@ -41,7 +41,7 @@ class CVLeToRC(cxBaseC):
         self.WorkDir = self.conf.GetConf('workdir') + '/'
         self.BaseLineEva = self.conf.GetConf('baselineeva')
         self.OutName = self.conf.GetConf('out')
-        StemQIn = self.conf.GetConf('queryin')
+#         StemQIn = self.conf.GetConf('queryin')
 #         self.hQidQuery = dict([line.split('\t') for line in open(StemQIn).read().splitlines()])
         if not os.path.exists(self.WorkDir):
             os.makedirs(self.WorkDir)
@@ -99,12 +99,12 @@ class CVLeToRC(cxBaseC):
 #             query = self.hQidQuery[str(qid)]
             ThisEva = self.Evaluator.EvaluatePerQ(qid, "", lDocNo)
             lPerQEva.append([qid,ThisEva])
-        lBaseEva = AdhocMeasureC.ReadPerQEva(self.BaseLineEva, False)
-        lBaseEva = [[str(item[0]),item[1]] for item in lBaseEva]
-        lPerQEva = AdhocMeasureC.FillMissEvaByBaseline(lPerQEva, lBaseEva)
+            
+        
+
         
         lPerQEva.sort(key=lambda item:int(item[0]))
-        lBaseEva.sort(key=lambda item:int(item[0]))    
+  
         out = open(self.OutName,'w')
         
         lDiffEva = []
@@ -116,19 +116,26 @@ class CVLeToRC(cxBaseC):
         EvaMean = AdhocMeasureC.AdhocMeasureMean(lEvaRes)
         print>>out, 'mean\t' + EvaMean.dumps()
         out.close()
+         
+         
+        if self.BaseLineEva != "": 
+            lBaseEva = AdhocMeasureC.ReadPerQEva(self.BaseLineEva, False)
+            lBaseEva = [[str(item[0]),item[1]] for item in lBaseEva]
+            lPerQEva = AdhocMeasureC.FillMissEvaByBaseline(lPerQEva, lBaseEva)  
             
-        for i in range(len(lPerQEva)):
-            lDiffEva.append([lPerQEva[i][0],(lPerQEva[i][1] - lBaseEva[i][1])])                    
-        lBaseEvaRes = [item[1] for item in lBaseEva]
-        BaseMean = AdhocMeasureC.AdhocMeasureMean(lBaseEvaRes)
-        
-        lDiffEva.sort(key=lambda item:item[1].ndcg)
-        for i in range(len(lDiffEva)):
-            print '%s\t%s' %(lDiffEva[i][0],lDiffEva[i][1].dumps())
-        
-        print 'mean\t' + (EvaMean-BaseMean).dumps()
-        print 'mean\t' + (EvaMean).dumps()
-        
+            lBaseEva.sort(key=lambda item:int(item[0]))   
+            for i in range(len(lPerQEva)):
+                lDiffEva.append([lPerQEva[i][0],(lPerQEva[i][1] - lBaseEva[i][1])])                    
+            lBaseEvaRes = [item[1] for item in lBaseEva]
+            BaseMean = AdhocMeasureC.AdhocMeasureMean(lBaseEvaRes)
+            
+            lDiffEva.sort(key=lambda item:item[1].ndcg)
+            for i in range(len(lDiffEva)):
+                print '%s\t%s' %(lDiffEva[i][0],lDiffEva[i][1].dumps())
+            
+            print 'mean\t' + (EvaMean-BaseMean).dumps()
+            print 'mean\t' + (EvaMean).dumps()
+         
         
         print 'eva finished'
         return
@@ -148,6 +155,9 @@ class CVLeToRC(cxBaseC):
         self.Evaluate()
         print "evaluated"
         return
+    
+
+        
     
     
     
