@@ -7,7 +7,8 @@ I collect the best parameters for each fold,
 and submit jobs for the test folds
 
 job parameter format:
-input parameter(json) prediction_res_name
+training data + testing data + parameter(json) + prediction_res_name
+
 what's my input:
 
 same as CVTrainJobSubmitter
@@ -100,7 +101,7 @@ class CVTestJobSubmitter(cxBaseC):
             return False
         for i in range(self.K):
             ParaStr = self.lBestPara[i]
-            lThisCmd = self.lCmd + [self.workdir + '/test_%d' %(i), ParaStr,self.workdir + '/predict_%d' %(i)]
+            lThisCmd = self.lCmd + [self.workdir+ '/train_%d' %(i),self.workdir + '/test_%d' %(i), ParaStr,self.workdir + '/predict_%d' %(i)]
             logging.info('submitting [%s]', ' '.join(lThisCmd))
             OutStr = subprocess.check_output(lThisCmd)
             logging.info(OutStr)

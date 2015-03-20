@@ -10,8 +10,6 @@ What's my output:
 '''
 import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
-site.addsitedir('/bos/usr0/cx/PyCode/GoogleAPI')
-site.addsitedir('/bos/usr0/cx/PyCode/SemanticSearch')
 from LeToR.CVLeToR import *
 import json
 import logging
