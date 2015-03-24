@@ -89,7 +89,7 @@ class CVTestJobSubmitter(cxBaseC):
             if -1 == MaxP:
                 logging.error('fold [%d] no results found', i)
                 continue
-            logging.info('[%d] fold best para [%d] [%f]',i,MaxP,MaxRes)
+            logging.info('[%d] fold best para [%d] best train cv res [%f]',i,MaxP,MaxRes)
             self.lBestPara.append(self.lParaStr[MaxP])
         logging.info('best performing parameters collected')
         logging.debug(json.dumps(self.lBestPara))
@@ -122,6 +122,7 @@ class CVTestJobSubmitter(cxBaseC):
     
 if __name__ == '__main__':
     import sys
+    logging.basicConfig(level=logging.INFO)
     if len(sys.argv) != 2:
         CVTestJobSubmitter.ShowConf()
         logging.error('no config file found')
