@@ -95,7 +95,8 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
             if [] == lQidDocScore:
                 lQidDocRank.append([qid,[[doc,score]]])
                 continue
-            if qid != lQidDocScore[-1][0]:
+            if qid != lQidDocRank[-1][0]:
+                logging.debug('get new qid %s',qid)
                 lQidDocRank.append([qid,[[doc,score]]])
                 continue
             lQidDocRank[-1][1].append([doc,score])
@@ -143,6 +144,7 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
     
 if __name__ == '__main__':
     import sys
+    logging.basicConfig(level=logging.DEBUG)
     if 2 != len(sys.argv):
         CVLeToRFinalResultCollectorC.ShowConf()
         sys.exit()
