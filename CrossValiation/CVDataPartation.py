@@ -12,7 +12,7 @@ what's my output:
 '''
 
 import math
-import itertools
+import itertools,logging
 
 def DataSplit(lData,K,NeedDev = False):
     llSplit = []
@@ -72,6 +72,7 @@ def GroupByKey(lLines,KeyCol,Spliter):
             lData.append([])
             CurrentKey = key
         lData[-1].append(line)
+    logging.info('[%d] lines grouped into [%d] group',len(lLines),len(lData))
     return lData
             
         

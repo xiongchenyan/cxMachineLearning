@@ -75,6 +75,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         '''
         create folds
         '''   
+        logging.info('creating folds')
         lTrainFile = []
         lTestFile = []
         for i in range(self.K):
@@ -83,6 +84,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         
         
         lLines = open(self.DataInName).read().splitlines()
+        logging.info('total [%d] lines', len(lLines))
         lTrain,lTest = PartitionData(lLines, self.K, GroupKeyCol=1, Spliter=' ')
         logging.info('data partitioned')
         for i in range(self.K):
