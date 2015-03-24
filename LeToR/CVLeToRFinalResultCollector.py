@@ -144,7 +144,7 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
     
 if __name__ == '__main__':
     import sys
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     if 2 != len(sys.argv):
         CVLeToRFinalResultCollectorC.ShowConf()
         sys.exit()
