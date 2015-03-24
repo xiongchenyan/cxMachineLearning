@@ -92,7 +92,7 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
         
         lQidDocRank = []
         for qid,doc,score in lQidDocScore:
-            if [] == lQidDocScore:
+            if [] == lQidDocRank:
                 lQidDocRank.append([qid,[[doc,score]]])
                 continue
             if qid != lQidDocRank[-1][0]:
