@@ -51,9 +51,12 @@ def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' '):
         for j in range(K):
             if (i % K) == j:
                 lTest[j].append(lData[i])
+                logging.debug('[%d] in [%d] test',i,j)
             else:
                 lTrain[j].append(lData[i])        
+                logging.debug('[%d] in [%d] train',i,j)
     
+    logging.debug('splited')
     if -1 != GroupKeyCol:
         lTrain = [[list(itertools.chain(*data)) for data in Fold] for Fold in lTrain]
         lTest = [[list(itertools.chain(*data)) for data in Fold] for Fold in lTest]
@@ -72,7 +75,7 @@ def GroupByKey(lLines,KeyCol,Spliter):
             lData.append([])
             CurrentKey = key
         lData[-1].append(line)
-    logging.info('[%d] lines grouped into [%d] group',len(lLines),len(lData))
+    logging.debug('[%d] lines grouped into [%d] group',len(lLines),len(lData))
     return lData
             
         
