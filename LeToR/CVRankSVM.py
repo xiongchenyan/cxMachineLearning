@@ -95,6 +95,8 @@ class CVRankSVMC(CVLeToRC):
         lLines = open(EvaOutName + '_full_eva').read().splitlines()
         
         MeanErr = float(lLines[-1].split()[-1])
+        out = open(EvaOutName,'w')
+        print >>out, MeanErr
         logging.info('mean err [%f]',MeanErr)
         return MeanErr
         
