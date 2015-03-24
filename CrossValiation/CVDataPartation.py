@@ -44,8 +44,8 @@ def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' '):
         lData = GroupByKey(lLines,GroupKeyCol,Spliter)
         
     
-    lTrain = [[]] * K
-    lTest = [[]] * K
+    lTrain = [[] for i in range(K)]
+    lTest = [[] for i in range(K)]
     
     for i in range(len(lData)):
         for j in range(K):
