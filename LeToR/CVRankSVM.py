@@ -84,6 +84,7 @@ class CVRankSVMC(CVLeToRC):
     
         
     def RunWithGivenPara(self,InName,ParaStr,EvaOutName):
+        logging.info('get para [%s] [%s] [%s]',InName,ParaStr,EvaOutName)
         if not self.SetByGivenPara(InName, ParaStr, EvaOutName):
             return
         logging.info('argv set successfully for input [%s]',InName)
