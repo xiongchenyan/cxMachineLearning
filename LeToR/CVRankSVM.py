@@ -145,7 +145,7 @@ if __name__ =='__main__':
     print "1 argv: the conf file"
     CVRankSVMC.ShowConf()
     print "3 argv: run by cmds InName, parastr (json format), evaout name (one single score)"
-                
+    print "current para\n%s" %(json.dumps(sys.argv,indent=1))            
             
             
             
