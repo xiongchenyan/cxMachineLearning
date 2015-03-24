@@ -75,12 +75,12 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
         return lQidDocRank
     
     def LoadOneFoldQDocRank(self,fold):
-        lTestLines = open(self.Workdir + '/_test_%d' %(fold)).read().splitlines()
+        lTestLines = open(self.Workdir + '/test_%d' %(fold)).read().splitlines()
         
         lvCol = [line.split() for line in lTestLines]
         lQidDoc = [[vCol[1].replace('qid:',''),vCol[-1].strip()] for vCol in lvCol]
         
-        lScore = open(self.Workdir + '/_predict_%d' %(fold)).read().splitlines()
+        lScore = open(self.Workdir + '/predict_%d' %(fold)).read().splitlines()
         lScore = [float(score) for score in lScore]
         
         if len(lQidDoc) != len(lScore):
