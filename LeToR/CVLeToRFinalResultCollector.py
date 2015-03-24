@@ -88,7 +88,7 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
             return []
         
         
-        lQidDocScore = zip(lQidDoc,lScore)
+        lQidDocScore = [[item[0][0],item[0][1],item[1]] for item in zip(lQidDoc,lScore)]
         
         lQidDocRank = []
         for qid,doc,score in lQidDocScore:
