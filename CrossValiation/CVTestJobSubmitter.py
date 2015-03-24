@@ -89,6 +89,7 @@ class CVTestJobSubmitter(cxBaseC):
             if -1 == MaxP:
                 logging.error('fold [%d] no results found', i)
                 continue
+            logging.info('[%d] fold best para [%d] [%f]',i,MaxP,MaxRes)
             self.lBestPara.append(self.lParaStr[MaxP])
         logging.info('best performing parameters collected')
         logging.debug(json.dumps(self.lBestPara))
@@ -100,7 +101,7 @@ class CVTestJobSubmitter(cxBaseC):
             logging.error('result not collected/missing')
             return False
         for i in range(self.K):
-            ParaStr = self.lBestPara[i]
+            ParaStr = self.lBestPara[i].replace('"','\\"').replace(' ','')
             lThisCmd = self.lCmd + [self.workdir+ '/train_%d' %(i),self.workdir + '/test_%d' %(i), ParaStr,self.workdir + '/predict_%d' %(i)]
             logging.info('submitting [%s]', ' '.join(lThisCmd))
             OutStr = subprocess.check_output(lThisCmd)
