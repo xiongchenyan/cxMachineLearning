@@ -106,12 +106,7 @@ class CVRankSVMC(CVLeToRC):
         
     def SetByGivenPara(self,InName,ParaStr,EvaOutName):
         self.In = InName
-        self.WorkDir = self.In + '_workdir/'
-        if not os.path.exists(self.WorkDir):
-            try:
-                os.mkdir(self.WorkDir)
-            except OSError:
-                logging.warn('creating [%s] race condition',self.WorkDir)
+        
             
         self.OutName = EvaOutName + '_full_eva'
         
@@ -124,6 +119,13 @@ class CVRankSVMC(CVLeToRC):
             logging.error('c not in para str [%s]',ParaStr)
             return False
         self.C = float(hPara['c'])
+        self.WorkDir = self.In + '_workdir_%s/' %(hPara['c'])
+        if not os.path.exists(self.WorkDir):
+            try:
+                os.mkdir(self.WorkDir)
+            except OSError:
+                logging.warn('creating [%s] race condition',self.WorkDir)
+        
         return True
         
         
