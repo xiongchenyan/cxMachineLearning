@@ -33,7 +33,7 @@ from AdhocEva.AdhocMeasure import AdhocMeasureC
 import subprocess
 import os
 import logging
-
+import json
 
 class CVLeToRFinalResultCollectorC(cxBaseC):
     
@@ -93,10 +93,10 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
         lQidDocRank = []
         for qid,doc,score in lQidDocScore:
             if [] == lQidDocScore:
-                lQidDocRank.append([qid,[doc,score]])
+                lQidDocRank.append([qid,[[doc,score]]])
                 continue
             if qid != lQidDocScore[-1][0]:
-                lQidDocRank.append([qid,[doc,score]])
+                lQidDocRank.append([qid,[[doc,score]]])
                 continue
             lQidDocRank[-1][1].append([doc,score])
             
