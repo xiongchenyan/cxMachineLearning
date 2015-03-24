@@ -53,6 +53,11 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
         self.Evaluator.SetConf(ConfIn)
         logging.info('CVLeToRFinalResultCollector load conf done')
         
+    @staticmethod
+    def ShowConf():
+        cxBaseC.ShowConf()
+        print "workdir\nK\nout"
+        AdhocEvaC.ShowConf()
         
     def LoadQDocRank(self):
         '''
