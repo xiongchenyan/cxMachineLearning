@@ -36,6 +36,7 @@ from cxBase.Conf import cxConfC
 import json
 import logging
 import os
+from CrossValiation.CVDataPartation import PartitionData
 
 class CVTrainJobSubmitterC(cxBaseC):
     def Init(self):
@@ -80,15 +81,23 @@ class CVTrainJobSubmitterC(cxBaseC):
             lTrainFile.append(open(self.workdir + '/train_%d'%(i),'w'))
             lTestFile.append(open(self.workdir + '/test_%d'%(i),'w'))
         
-        cnt = 0
-        for line in open(self.DataInName):
-            line = line.strip()
-            for i in range(self.K):
-                if i == (cnt % self.K):
-                    print >> lTestFile[i], line
-                else:
-                    print >> lTrainFile[i], line            
-            cnt += 1
+        
+        lLines = open(self.DataInName).read().splitlines()
+        lTrain,lTest = PartitionData(lLines, self.K, GroupKeyCol=1, Spliter=' ')
+        logging.info('data partitioned')
+        for i in range(self.K):
+            print >> lTrainFile[i], '\n'.join(lTrain[i])
+            print >> lTestFile[i], '\n'.join(lTest[i])
+            logging.info('train [%d] [%d] line, test [%d] [%d] line',i,len(lTrain[i]),i,len(lTest[i]))
+#         
+#         for line in open(self.DataInName):
+#             line = line.strip()
+#             for i in range(self.K):
+#                 if i == (cnt % self.K):
+#                     print >> lTestFile[i], line
+#                 else:
+#                     print >> lTrainFile[i], line            
+#             cnt += 1
             
         logging.info('create train test folds done')
         
