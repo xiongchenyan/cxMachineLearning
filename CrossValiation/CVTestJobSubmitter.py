@@ -40,7 +40,7 @@ class CVTestJobSubmitter(cxBaseC):
         self.workdir = ""
         self.lCmd = []
         self.lParaStr = []
-        self.DataInName = ""
+#         self.DataInName = ""
         self.K = 5
         self.lBestPara = []  #the best parameter for each fold (the lines in lParaStr)
         
@@ -49,7 +49,7 @@ class CVTestJobSubmitter(cxBaseC):
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print "in\nworkdir\nparafile\ncmd\nk"
+        print "workdir\nparafile\ncmd\nk"
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
@@ -63,7 +63,7 @@ class CVTestJobSubmitter(cxBaseC):
         ParaInName = self.conf.GetConf('parafile')
         self.lParaStr = open(ParaInName).read().splitlines()
         
-        self.DataInName = self.conf.GetConf('in')
+#         self.DataInName = self.conf.GetConf('in')
         
         self.K = int(self.conf.GetConf('k', self.K))
         
@@ -102,7 +102,7 @@ class CVTestJobSubmitter(cxBaseC):
             return False
         for i in range(self.K):
             ParaStr = self.lBestPara[i].replace('"','\\"').replace(' ','')
-            lThisCmd = self.lCmd + [self.workdir+ '/train_%d' %(i),self.workdir + '/test_%d' %(i), ParaStr,self.workdir + '/predict_%d' %(i)]
+            lThisCmd = ['qsub'] + self.lCmd + [self.workdir+ '/train_%d' %(i),self.workdir + '/test_%d' %(i), ParaStr,self.workdir + '/predict_%d' %(i)]
             logging.info('submitting [%s]', ' '.join(lThisCmd))
             OutStr = subprocess.check_output(lThisCmd)
             logging.info(OutStr)
