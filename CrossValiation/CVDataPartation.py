@@ -57,9 +57,11 @@ def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' '):
                 logging.debug('[%d] in [%d] train',i,j)
     
     logging.debug('splited')
+    
     if -1 != GroupKeyCol:
-        lTrain = [[list(itertools.chain(*data)) for data in Fold] for Fold in lTrain]
-        lTest = [[list(itertools.chain(*data)) for data in Fold] for Fold in lTest]
+        lTrain = [list(itertools.chain(*Fold)) for Fold in lTrain]
+        lTest = [list(itertools.chain(*Fold)) for Fold in lTest]
+        logging.debug('re grouped')
     return lTrain,lTest 
 
 
