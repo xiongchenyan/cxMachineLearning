@@ -25,7 +25,7 @@ class CVRankSVMC(CVLeToRC):
     def SetConf(self, ConfIn):
         CVLeToRC.SetConf(self, ConfIn)
         self.C = float(self.conf.GetConf('c', self.C))
-        self.lModelTrainCmd.append('%f' %(self.C))
+#         self.lModelTrainCmd.append('%f' %(self.C))
         
     @staticmethod
     def ShowConf():
@@ -43,7 +43,7 @@ class CVRankSVMC(CVLeToRC):
         ModelData = self.WorkDir + 'Model_%d' %(k)
         PreData = self.WorkDir + 'Pre_%d' %(k)
         
-        lTrainCmd = self.lModelTrainCmd + [TrainData,ModelData]
+        lTrainCmd = self.lModelTrainCmd + ['%f' %(self.C),TrainData,ModelData]
         print "training %s" %(json.dumps(lTrainCmd))
         subprocess.check_output(lTrainCmd)
         

@@ -118,6 +118,7 @@ class CVTrainJobSubmitterC(cxBaseC):
 if __name__ == '__main__':
     
     import sys
+    logging.basicConfig(level=logging.INFO)
     if 2 != len(sys.argv):
         CVTrainJobSubmitterC.ShowConf()
         sys.exit()

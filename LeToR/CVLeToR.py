@@ -19,7 +19,7 @@ from cxBase.Conf import cxConfC
 # from SemanticRankEvaluate.SemanticRankEvaluator import *
 from AdhocEva.AdhocEva import AdhocEvaC
 from AdhocEva.AdhocMeasure import AdhocMeasureC
-import subprocess
+import subprocess,logging
 import os
 
 class CVLeToRC(cxBaseC):
@@ -142,17 +142,18 @@ class CVLeToRC(cxBaseC):
         
     
     def Process(self):
+        logging.info('start processing')
         self.ReadData()
-        print "Data read"
+        logging.info("Data read")
         self.PartitionData()
-        print "partitioned"
+        logging.info("partitioned")
         for k in range(0,self.K):
             self.RunModelForOnePartition(k)
-            print "fold [%d] train-tested" %(k)
+            logging.info("fold [%d] train-tested",k)
         self.CollectResult()
-        print "result collected"
+        logging.info("result collected")
         self.Evaluate()
-        print "evaluated"
+        logging.info("evaluated")
         return
     
 
