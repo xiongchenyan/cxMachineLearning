@@ -99,7 +99,7 @@ class CVLeToRFinalResultCollectorC(cxBaseC):
                 lQidDocRank.append([qid,[[doc,score]]])
                 continue
             lQidDocRank[-1][1].append([doc,score])
-            
+        print json.dumps(lQidDocRank,indent=1)    
         for i in range(len(lQidDocRank)):
             l = lQidDocRank[i][1]
             l.sort(key=lambda item:item[1],reverse = True)
