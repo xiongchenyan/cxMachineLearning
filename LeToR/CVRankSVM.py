@@ -108,7 +108,10 @@ class CVRankSVMC(CVLeToRC):
         self.In = InName
         self.WorkDir = self.In + '_workdir/'
         if not os.path.exists(self.WorkDir):
-            os.mkdir(self.WorkDir)
+            try:
+                os.mkdir(self.WorkDir)
+            except OSError:
+                logging.warn('creating [%s] race condition',self.WorkDir)
             
         self.OutName = EvaOutName + '_full_eva'
         
