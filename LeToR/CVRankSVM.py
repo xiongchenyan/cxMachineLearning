@@ -128,6 +128,7 @@ class CVRankSVMC(CVLeToRC):
 
 if __name__ =='__main__':
     import sys
+    logging.basicConfig(level=logging.INFO)
     if len(sys.argv) == 2:
         processor = CVRankSVMC(sys.argv[1])
         processor.Process()
