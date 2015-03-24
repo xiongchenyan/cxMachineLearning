@@ -98,6 +98,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         for i in range(self.K):
             for j in range(len(self.lParaStr)):
                 ParaStr = self.lParaStr[j]
+                ParaStr = ParaStr.replace('"','\\"').replace(' ','')
                 lThisCmd = ['qsub'] + self.lCmd + [self.workdir + '/train_%d' %(i), ParaStr,self.workdir + '/res_%d_%d' %(i,j)]
                 logging.info('submitting [%s]', ' '.join(lThisCmd))
                 OutStr = subprocess.check_output(lThisCmd)
