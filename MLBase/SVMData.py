@@ -84,10 +84,14 @@ class SVMDataC(object):
     @staticmethod
     def TransferSVMDataToMtx(InName,OutName):
         out = open(OutName,'w')
-        
+        cnt = 0
+        logging.info('start working on [%s]',InName)
         for line in open(InName):
             data = SVMDataC(line.strip())
             print >>out, data.DumpMtxLine()
+            cnt += 1
+            if 0 == (cnt % 1000):
+                logging.info('transferred [%d] lines' ,cnt)
             
         out.close()
         logging.info('svm data [%s] to mtx [%s]',InName,OutName)
