@@ -12,7 +12,7 @@ what's my output:
 
 '''
 import logging
-
+import json
 class SVMDataC(object):
     
     def __init__(self,line = ""):
@@ -44,7 +44,7 @@ class SVMDataC(object):
             lFCol = lDataCol[2:]
         else:
             lFCol = lDataCol[1:]
-            
+        logging.debug('get feature col %s',json.dumps(lFCol))    
         for fcol in lFCol:
             dim,score = fcol.split(':')
             score = float(score)
@@ -102,6 +102,7 @@ if __name__ == '__main__':
     '''
     going to have more transfer format stuff
     '''
+    logging.basicConfig(level=logging.DEBUG)
     if 3 != len(sys.argv):
         print "transfer svm data to mtx"
         print "2 para: input + output"
