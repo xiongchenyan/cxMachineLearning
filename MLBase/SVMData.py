@@ -44,7 +44,7 @@ class SVMDataC(object):
             lFCol = lDataCol[2:]
         else:
             lFCol = lDataCol[1:]
-#         logging.debug('get feature col %s',json.dumps(lFCol))    
+        logging.debug('get feature col %s',json.dumps(lFCol))    
         for fcol in lFCol:
             dim,score = fcol.split(':')
             score = float(score)
