@@ -32,7 +32,7 @@ class SVMDataC(object):
         if len(vCol) > 1:
             self.Note = vCol[-1].strip()
             
-        data = vCol[0]
+        data = vCol[0].strip()
         
         lDataCol = data.split(' ')
         self.Label = float(lDataCol[0])
@@ -44,7 +44,7 @@ class SVMDataC(object):
             lFCol = lDataCol[2:]
         else:
             lFCol = lDataCol[1:]
-        logging.debug('get feature col %s',json.dumps(lFCol))    
+#         logging.debug('get feature col %s',json.dumps(lFCol))    
         for fcol in lFCol:
             dim,score = fcol.split(':')
             score = float(score)
