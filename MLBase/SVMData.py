@@ -44,7 +44,7 @@ class SVMDataC(object):
             lFCol = lDataCol[2:]
         else:
             lFCol = lDataCol[1:]
-        logging.debug('get feature col %s',json.dumps(lFCol))    
+#         logging.debug('get feature col %s',json.dumps(lFCol))    
         for fcol in lFCol:
             dim,score = fcol.split(':')
             score = float(score)
@@ -73,7 +73,7 @@ class SVMDataC(object):
         lFeature = self.hFeature.items()
         lFeature.sort(key=lambda item: int(item[0]))
         
-        res += ','.join([item[1] for item in lFeature ])
+        res += ','.join([str(item[1]) for item in lFeature ])
         
         if "" != self.qid:
             res += ',%s' %(self.qid)
