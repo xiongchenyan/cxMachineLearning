@@ -97,6 +97,8 @@ class SVMDataC(object):
         logging.info('svm data [%s] to mtx [%s]',InName,OutName)
         
         return True
+     
+     
         
         
         
