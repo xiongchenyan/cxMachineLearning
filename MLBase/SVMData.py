@@ -48,6 +48,7 @@ class SVMDataC(object):
         for fcol in lFCol:
             dim,score = fcol.split(':')
             score = float(score)
+            dim = int(dim)
             self.hFeature[dim] = score
             
         return True
@@ -58,9 +59,9 @@ class SVMDataC(object):
         if self.qid != "":
             res += ' qid:%s' %(self.qid)
         lFeature = self.hFeature.items()
-        lFeature.sort(key=lambda item: int(item[0]))
+        lFeature.sort(key=lambda item: item[0])
         
-        res += ' '.join([item[0] + ":" + item[1] for item in lFeature ])
+        res += ' '.join([str(item[0]) + ":" + str(item[1]) for item in lFeature ])
         
         if "" != self.Note:
             res += ' # %s' %(self.Note)
