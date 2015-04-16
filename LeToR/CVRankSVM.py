@@ -135,7 +135,16 @@ class CVRankSVMC(CVLeToRC):
 
 if __name__ =='__main__':
     import sys
-    logging.basicConfig(level=logging.INFO)
+    root = logging.getLogger()
+    root.setLevel(logging.INFO)
+    
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    root.addHandler(ch)
+    
+    
     if len(sys.argv) == 2:
         processor = CVRankSVMC(sys.argv[1])
         processor.Process()
