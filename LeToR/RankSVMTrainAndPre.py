@@ -76,7 +76,13 @@ if __name__ == '__main__':
     if 5 != len(sys.argv):
         print "4 para: train data, test data , para str (json format), out"
         sys.exit()
-        
+    root = logging.getLogger()
+    root.setLevel(logging.INFO)
+    
+    ch = logging.StreamHandler(sys.stdout)
+    ch.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)    
         
     processor = RankSVMTrainAndPreC(sys.argv[1])
     processor.Process(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
