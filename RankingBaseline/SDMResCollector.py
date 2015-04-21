@@ -51,7 +51,7 @@ ch.setFormatter(formatter)
     
 Evaluator = AdhocEvaC(sys.argv[1])
 conf = cxConfC(sys.argv[1])
-workdir= conf.GetConf('workdir')
+workdir= conf.GetConf('workdir') + '/'
 k = int(conf.GetConf('k'))
 OutName = conf.GetConf('out')
 
