@@ -22,7 +22,6 @@ site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
 from cxBase.Conf import cxConfC
 from IndriSearch.IndriSearchCenter import IndriSearchCenterC
 from AdhocEva.AdhocEva import AdhocEvaC
-from AdhocEva.AdhocMeasure import AdhocMeasureC
 from IndriSearch.QueryGenerator import QueryGeneratorC
 
 import sys
