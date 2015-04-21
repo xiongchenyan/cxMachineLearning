@@ -46,11 +46,13 @@ class CVTrainJobSubmitterC(cxBaseC):
         self.lParaStr = []
         self.DataInName = ""
         self.K = 5
+        self.GroupKeyCol = 1
+        self.Spliter = ' '
         
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print "in\nworkdir\nparafile\ncmd\nk"
+        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\n"
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
@@ -67,7 +69,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         self.DataInName = self.conf.GetConf('in')
         
         self.K = int(self.conf.GetConf('k', self.K))
-        
+        self.GroupKeyCol = int(self.conf.GetConf('groupkeycol', self.GroupKeyCol))
         logging.info('conf all loaded')
         
     
