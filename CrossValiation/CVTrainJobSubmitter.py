@@ -87,7 +87,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         
         lLines = open(self.DataInName).read().splitlines()
         logging.info('total [%d] lines', len(lLines))
-        lTrain,lTest = PartitionData(lLines, self.K, GroupKeyCol=1, Spliter=' ')
+        lTrain,lTest = PartitionData(lLines, self.K, GroupKeyCol=self.GroupKeyCol, Spliter=self.Spliter)
         logging.info('data partitioned')
         for i in range(self.K):
             print >> lTrainFile[i], '\n'.join(lTrain[i])
