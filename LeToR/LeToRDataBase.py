@@ -42,14 +42,14 @@ class LeToRDataBaseC(object):
         for feature in lFeatureStr:
             dim,value = feature.split(':')
             value = float(value)
-            dim =int(dim)
+#             dim =int(dim)
             hFeature[dim] = value
         return hFeature
     
     def MakeFeatureStr(self):
         lDim = self.hFeature.items()
         lDim.sort(key=lambda item:item[0])
-        lFeatureStr = ['%d:%f' %(item[0],item[1]) for item in lDim]
+        lFeatureStr = ['%s:%f' %(item[0],item[1]) for item in lDim]
         return " ".join(lFeatureStr)
     
     
