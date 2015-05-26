@@ -62,7 +62,7 @@ class LeToRDataBaseC(object):
         for feature in lFeatureStr:
             dim,value = feature.split(':')
             value = float(value)
-#             dim =int(dim)
+            dim =int(dim)
             hFeature[dim] = value
         return hFeature
     
@@ -108,8 +108,28 @@ class LeToRDataBaseC(object):
                     continue
                 lLeToRData[i].hFeature[dim] = (lLeToRData[i].hFeature[dim] - DimMin) / (DimMax-DimMin)
         return lLeToRData
+    
+    @staticmethod
+    def DiscardNonUsefulFeature(lLeToRData):
+        hMax = LeToRDataBaseC.MaxFeature(lLeToRData)
+        hMin = LeToRDataBaseC.MinFeature(lLeToRData)
+        
+        setKeepFeature = set()
+        for key in hMax.keys():
+            if not hMax[key] == hMin[key]:
+                setKeepFeature.add(key)     
         
         
+        hFeatureName = {}
+        for i in range(len(lLeToRData)):
+            hNewFeature = {}
+            for key,score in lLeToRData[i].hFeature.items():
+                if key in setKeepFeature:
+                    hNewFeature[key] = score
+            lLeToRData[i].hFeature = hNewFeature
+            hFeatureName = lLeToRData[i].HashFeatureName(hFeatureName)
+        return lLeToRData
+            
         
         
         
