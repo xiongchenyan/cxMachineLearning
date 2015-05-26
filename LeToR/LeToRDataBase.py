@@ -35,7 +35,27 @@ class LeToRDataBaseC(object):
     def dumps(self):
         line = "%f qid:%s %s # %s" %(self.score,self.qid,self.MakeFeatureStr(),self.DocNo)
         return line
+    
+    def HashFeatureName(self,hFeatureName):
+        '''
+        hashlize feature name
+        '''
+        if {} == self.hFeature:
+            continue
+        lName = self.hFeature.keys()
+        lName.sort()
+        for name in lName:
+            if not name in hFeatureName:
+                hFeatureName[name] = len(hFeatureName) + 1
         
+        hNewFeature = {}
+        for key,score in self.hFeature.items():
+            KeyId = hFeatureName[key]
+            hNewFeature[KeyId] = score
+        self.hFeature = hNewFeature
+        return hFeatureName
+        
+            
         
     def SegFeatureCol(self,lFeatureStr):
         hFeature = {}
