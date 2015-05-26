@@ -41,7 +41,7 @@ class LeToRDataBaseC(object):
         hashlize feature name
         '''
         if {} == self.hFeature:
-            continue
+            return
         lName = self.hFeature.keys()
         lName.sort()
         for name in lName:
