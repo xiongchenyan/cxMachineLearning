@@ -130,7 +130,16 @@ class LeToRDataBaseC(object):
             hFeatureName = lLeToRData[i].HashFeatureName(hFeatureName)
         return lLeToRData
             
-        
+    @staticmethod
+    def SliceViaQid(lLeToRData):
+        llLeToRData = []
+        LastQid = None
+        for data in lLeToRData:
+            if data.qid != LastQid:
+                llLeToRData.append([])
+                LastQid = data.qid
+            llLeToRData[-1].append(data)
+        return llLeToRData    
         
         
             
