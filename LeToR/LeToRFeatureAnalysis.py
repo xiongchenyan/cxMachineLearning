@@ -25,7 +25,7 @@ from cxBase.base import cxBaseC
 from AdhocEva.AdhocEva import AdhocEvaC
 from LeToR.LeToRDataBase import LeToRDataBaseC
 import logging
-
+import random
 
 class LeToRFeatureAnalysisC(cxBaseC):
     
@@ -43,44 +43,51 @@ class LeToRFeatureAnalysisC(cxBaseC):
         cxBaseC.ShowConf()
         AdhocEvaC.ShowConf()
         
-    def FormRankByOneFeature(self,lLeToRData,FeatureId):
+    def FormRankByOneFeature(self,llLeToRData,FeatureId):
         '''
         lLeToRData is the svm format data for a query
         rank by this fid
         return lDocNo for this qid
         '''
         FeatureId = int(FeatureId)
-        lQidDocNoScore = []
-        for LTRData in lLeToRData:
-            score = 0
-            if FeatureId in LTRData.hFeature:
-                score = LTRData.hFeature[FeatureId]
-            lQidDocNoScore.append([LTRData.qid, LTRData.DocNo,score])
+        llDocNo = []
+        for lLeToRData in llLeToRData:
+            lDocNoScore = []
+            for LTRData in lLeToRData:
+                score = 0
+                if FeatureId in LTRData.hFeature:
+                    score = LTRData.hFeature[FeatureId]
+                lDocNoScore.append([LTRData.DocNo,score])
+            lDocNoScore.sort(key=lambda item:item[1], reverse = True)
+            llDocNo.append([item[0] for item in lDocNoScore])
             
-#         lQidDocNoScore.sort(key=lambda item:item[1],reverse = True)
-        lQid = []
-        llDocNoScore = []
-        LastQid = None
-        for qid,DocNo,score in lQidDocNoScore:
-            if qid != LastQid:
-                lQid.append(qid)
-                llDocNoScore.append([])
-                LastQid = qid
-            llDocNoScore[-1].append([DocNo,score])
-
-        llDocNo = []        
-        for i in range(len(llDocNoScore)):
-            llDocNoScore[i].sort(key=lambda item:item[1], reverse = True)
-            llDocNo.append([item[0] for item in llDocNoScore[i]])
+            
         
-        return lQid,llDocNo
+        return llDocNo
+    
+    def FormRandomExpectRank(self,llLeToRData):
         
+        llDocNo = []
+        for lLeToRData in llLeToRData:
+            lDocNo = [data.DocNo for data in lLeToRData]
+            random.shuffle(lDocNo)
+            llDocNo.append(lDocNo)
+        
+        return llDocNo
+            
+            
+            
+            
+            
         
     
     def PipeRun(self,SVMDataInName,OutName):
         lLines = open(SVMDataInName).read().splitlines()
         
         lLeToRData = [LeToRDataBaseC(line) for line in lLines]
+        llLeToRData = LeToRDataBaseC.SliceViaQid(lLeToRData)
+        lQid = [l[0].qid for l in llLeToRData]
+        
         
         hFeature = {}
         for ltr in lLeToRData:
@@ -94,13 +101,18 @@ class LeToRFeatureAnalysisC(cxBaseC):
         out = open(OutName,'w')
         
         for FeatureId in lFid:
-            lQid,llDocNo = self.FormRankByOneFeature(lLeToRData, FeatureId)
+            llDocNo = self.FormRankByOneFeature(llLeToRData, FeatureId)
             EvaRes = self.Evaluator.EvaluateMul(lQid, [], llDocNo)
             print >>out, '%s\t%s' %(FeatureId,EvaRes.dumps())
             logging.info('feature [%d] evaluated',FeatureId)
         
+        llRandDocNo = self.FormRandomExpectRank(llLeToRData)
+        RandEvaRes = self.Evaluator.EvaluateMul(lQid, [], llRandDocNo)
+        print >>out, 'rand\t%s' %(RandEvaRes.dumps())
+        logging.info('random result evaluated')
         out.close()
         logging.info('finished')
+        return
         
         
 if __name__ == '__main__':
