@@ -27,7 +27,7 @@ import logging
 from cxBase.base import cxBaseC
 from cxBase.Conf import cxConfC
 
-class LeToRTextSimFeatureExtractCenterC(cxBaseC):
+class LeToRFeatureExtractCenterC(cxBaseC):
     
     def Init(self):
         cxBaseC.Init(self)
@@ -37,7 +37,7 @@ class LeToRTextSimFeatureExtractCenterC(cxBaseC):
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
-        self.lFeatureGroup = self.conf.GetConf('featuregroup', self.lFeatureGroup)
+        self.lFeatureGroup = self.conf.GetConf('letorfeaturegroup', self.lFeatureGroup)
         if 'text' in self.lFeatureGroup:
             self.TextSimExtractor.SetConf(ConfIn)
         if 'docquality' in self.lFeatureGroup:
@@ -47,7 +47,7 @@ class LeToRTextSimFeatureExtractCenterC(cxBaseC):
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print 'featuregroup text#docquality'
+        print 'letorfeaturegroup text#docquality'
         LeToRDocQualityFeatureExtractorC.ShowConf()
         LeToRTextSimFeatureExtractorC.ShowConf()
         
