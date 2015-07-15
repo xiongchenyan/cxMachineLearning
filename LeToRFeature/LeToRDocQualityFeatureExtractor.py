@@ -64,7 +64,7 @@ class LeToRDocQualityFeatureExtractorC(LeToRFeatureExtractorC):
         hFeature.update(self.ExtractSpamScore(doc))
         hFeature.update(self.ExtractDocLen(doc))
         hFeature.update(self.ExtractInlinkCnt(doc))
-        self.hDocFeature[doc.DocNo] = hFeature
+#         self.hDocFeature[doc.DocNo] = hFeature
         return hFeature
     
     def ExtractDocLen(self,doc):
