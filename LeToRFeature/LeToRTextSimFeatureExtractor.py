@@ -43,9 +43,9 @@ class LeToRTextSimFeatureExtractorC(LeToRFeatureExtractorC):
         self.Prepare()
         
         
-    @staticmethod
-    def ShowConf():
-        LeToRFeatureExtractorC.ShowConf()
+    @classmethod
+    def ShowConf(cls):
+        print cls.__name__
         print "ctf\ndocfield"
         
     

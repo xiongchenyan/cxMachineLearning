@@ -38,8 +38,9 @@ class LeToRDocQualityFeatureExtractorC(LeToRFeatureExtractorC):
         logging.info('doc quality feature conf setted')
         
        
-    @staticmethod
-    def ShowConf():
+    @classmethod
+    def ShowConf(cls):
+        print cls.__name__
         LeToRFeatureExtractorC.ShowConf()
         print "spamscore"
         

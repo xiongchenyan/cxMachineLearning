@@ -44,9 +44,10 @@ class LeToRFeatureExtractCenterC(cxBaseC):
             self.TextSimExtractor.SetConf(ConfIn)
             
         
-    @staticmethod
-    def ShowConf():
+    @classmethod
+    def ShowConf(cls):
         cxBaseC.ShowConf()
+        print cls.__name__
         print 'letorfeaturegroup text#docquality'
         LeToRDocQualityFeatureExtractorC.ShowConf()
         LeToRTextSimFeatureExtractorC.ShowConf()
