@@ -41,7 +41,7 @@ class LeToRFeatureExtractCenterC(cxBaseC):
         if 'text' in self.lFeatureGroup:
             self.TextSimExtractor.SetConf(ConfIn)
         if 'docquality' in self.lFeatureGroup:
-            self.TextSimExtractor.SetConf(ConfIn)
+            self.DocQualityExtractor.SetConf(ConfIn)
             
         
     @classmethod
