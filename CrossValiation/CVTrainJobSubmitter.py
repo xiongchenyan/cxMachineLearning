@@ -54,16 +54,14 @@ class CVTrainJobSubmitterC(cxBaseC):
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\nruntype train|pipe\n"
+        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\nspliter\nruntype train|pipe\n"
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
         self.workdir = self.conf.GetConf('workdir')
         if not os.path.exists(self.workdir):
             os.mkdir(self.workdir)
-        self.lCmd = self.conf.GetConf('cmd')
-        if type(self.lCmd) != list:
-            self.lCmd = [self.lCmd]
+        self.lCmd = self.conf.GetConf('cmd',self.lCmd)
         
         ParaInName = self.conf.GetConf('parafile')
         self.lParaStr = open(ParaInName).read().splitlines()
