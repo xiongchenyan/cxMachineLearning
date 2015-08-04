@@ -36,7 +36,7 @@ from cxBase.Conf import cxConfC
 import json
 import logging
 import os
-from CrossValiation.CVDataPartation import PartitionData
+from CrossValiation.CVDataPartation import PartitionData, CreateFolds
 
 class CVTrainJobSubmitterC(cxBaseC):
     def Init(self):
@@ -49,10 +49,12 @@ class CVTrainJobSubmitterC(cxBaseC):
         self.GroupKeyCol = 1
         self.Spliter = ' '
         
+        self.RunType = 'pipe'
+        
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\n"
+        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\nruntype train|pipe\n"
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
@@ -70,44 +72,24 @@ class CVTrainJobSubmitterC(cxBaseC):
         
         self.K = int(self.conf.GetConf('k', self.K))
         self.GroupKeyCol = int(self.conf.GetConf('groupkeycol', self.GroupKeyCol))
+        
+        self.RunType = self.conf.GetConf('runtype', self.RunType)
+        
         logging.info('conf all loaded')
         
     
-    def CreateFolds(self):
+    def MakeFolds(self):
         '''
         create folds
         '''   
-        logging.info('creating folds')
-        lTrainFile = []
-        lTestFile = []
-        for i in range(self.K):
-            lTrainFile.append(open(self.workdir + '/train_%d'%(i),'w'))
-            lTestFile.append(open(self.workdir + '/test_%d'%(i),'w'))
-        
-        
-        lLines = open(self.DataInName).read().splitlines()
-        logging.info('total [%d] lines', len(lLines))
-        lTrain,lTest = PartitionData(lLines, self.K, GroupKeyCol=self.GroupKeyCol, Spliter=self.Spliter)
-        logging.info('data partitioned')
-        for i in range(self.K):
-            print >> lTrainFile[i], '\n'.join(lTrain[i])
-            print >> lTestFile[i], '\n'.join(lTest[i])
-            logging.info('train [%d] [%d] line, test [%d] [%d] line',i,len(lTrain[i]),i,len(lTest[i]))
-#         
-#         for line in open(self.DataInName):
-#             line = line.strip()
-#             for i in range(self.K):
-#                 if i == (cnt % self.K):
-#                     print >> lTestFile[i], line
-#                 else:
-#                     print >> lTrainFile[i], line            
-#             cnt += 1
-            
-        logging.info('create train test folds done')
-        
+        CreateFolds(self.workdir,self.DataInName,self.K,self.GroupKeyCol,self.Spliter)
+               
         return True
     
-    def Submit(self):
+    def SubmitTrain(self):
+        '''
+        if multiple parameter, submit training jobs
+        '''
         for i in range(self.K):
             for j in range(len(self.lParaStr)):
                 ParaStr = self.lParaStr[j]
@@ -119,12 +101,29 @@ class CVTrainJobSubmitterC(cxBaseC):
         logging.info('all job submitted')
         return True
     
+    def SubmitFullPipe(self):
+        '''
+        just use first parameter to do train-test
+        '''
+        for i in range(self.K):
+            ParaStr = self.lParaStr[0]
+            lThisCmd = ['qsub'] + self.lCmd + [self.workdir+ '/train_%d' %(i),self.workdir + '/test_%d' %(i), ParaStr,self.workdir + '/predict_%d' %(i)]
+            logging.info('submitting [%s]', ' '.join(lThisCmd))
+            OutStr = subprocess.check_output(lThisCmd)
+            logging.info(OutStr)
+        logging.info('all pipe job submitted')
+        
+    
     
     def Process(self):
         logging.info('start working on training cv folds')
-        self.CreateFolds()
-        logging.info('start submitting jobs for all folds \times parameters')
-        self.Submit()
+        self.MakeFolds()
+        if self.RunType == 'train':
+            logging.info('start submitting jobs for all folds \times parameters')
+            self.SubmitTrain()
+        if self.RunType == 'pipe':
+            logging.info('start submitting jobs for pipe run')
+            self.SubmitFullPipe()
         logging.info('finished')
         return
     

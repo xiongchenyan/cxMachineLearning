@@ -80,7 +80,30 @@ def GroupByKey(lLines,KeyCol,Spliter):
     logging.debug('[%d] lines grouped into [%d] group',len(lLines),len(lData))
     return lData
             
+def CreateFolds(workdir,DataInName,K,GroupKeyCol=1,Spliter = '\t'):
+    '''
+    create folds
+    '''   
+    logging.info('creating folds')
+    lTrainFile = []
+    lTestFile = []
+    for i in range(K):
+        lTrainFile.append(open(workdir + '/train_%d'%(i),'w'))
+        lTestFile.append(open(workdir + '/test_%d'%(i),'w'))
+    
+    
+    lLines = open(DataInName).read().splitlines()
+    logging.info('total [%d] lines', len(lLines))
+    lTrain,lTest = PartitionData(lLines, K, GroupKeyCol=GroupKeyCol, Spliter=Spliter)
+    logging.info('data partitioned')
+    for i in range(K):
+        print >> lTrainFile[i], '\n'.join(lTrain[i])
+        print >> lTestFile[i], '\n'.join(lTest[i])
+        logging.info('train [%d] [%d] line, test [%d] [%d] line',i,len(lTrain[i]),i,len(lTest[i]))
         
+    logging.info('create train test folds done')
+    
+    return True        
 
 
 

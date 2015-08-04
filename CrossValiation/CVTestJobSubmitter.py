@@ -13,7 +13,7 @@ what's my input:
 
 same as CVTrainJobSubmitter
 But must has res_%d_%d which is the finished results of CVTrain job
-larger number means better! (if it is lost or so, the submitted job does the reverse)
+larger number means better! (if it is lose or so, the submitted job does the reverse)
 
 what's my output:
 the predict_%d_%d results in the workdir
@@ -43,7 +43,6 @@ class CVTestJobSubmitter(cxBaseC):
 #         self.DataInName = ""
         self.K = 5
         self.lBestPara = []  #the best parameter for each fold (the lines in lParaStr)
-        
         
         
     @staticmethod
