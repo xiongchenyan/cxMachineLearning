@@ -112,9 +112,10 @@ class ListMLEModelC(object):
         SumWeightedGf = np.sum(lExpFWeightedGf,0)
         
         for i in range(len(lQDocData)):
-            res = -lPerDocGf[i,:] + SumWeightedGf / SumExpF
+            ThisGradient = -lPerDocGf[i,:] + SumWeightedGf / SumExpF
             SumExpF -= lExpF[i]
             SumWeightedGf -= lExpFWeightedGf[i,:]
+            res += ThisGradient
             
         return res
         
