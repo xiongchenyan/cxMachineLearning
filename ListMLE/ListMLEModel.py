@@ -88,7 +88,7 @@ class ListMLEModelC(object):
         
         res = np.mean([cls.PerQGradient(w,lQDocData,f,gf) for lQDocData in llQDocData],0)
 
-        logging.debug('gradient %s',np.array2string(gf))        
+        logging.debug('gradient %s',np.array2string(res))        
         return res
     
     
