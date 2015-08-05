@@ -104,8 +104,9 @@ class ListMLEModelC(object):
         
         lPerDocGf = np.array([gf(w,data) for data in lQDocData])  #|doc| * |w| mtx
         lExpF = np.exp([f(w,data) for data in lQDocData])
-        lExpFWeightedGf = lPerDocGf * \
-            (  lExpF.reshape([len(lExpF),1]).dot( np.ones(1,res.shape[0]) )  )  #now |doc| * |w|
+
+        MultiWeightMtx = lExpF.reshape([len(lExpF),1]).dot( np.ones([1,res.shape[0]]) )  #reshape for dot product 
+        lExpFWeightedGf = lPerDocGf * MultiWeightMtx
             
         SumExpF = np.sum(lExpF)
         SumWeightedGf = np.sum(lExpFWeightedGf,0)
