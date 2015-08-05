@@ -51,13 +51,18 @@ class ListMLEModelC(object):
         #get optimal order
         lQDocData.sort(key=lambda item:item.GetRelScore(), reverse = True)
         
-        lRankingScore = [f(w,data) for data in lQDocData]  #local prediction assumption
+        lRankingScore = np.array([f(w,data) for data in lQDocData])  #local prediction assumption
         lExpF = np.exp(lRankingScore)
         SumExpF = np.sum(lExpF)
         CurrentSum = SumExpF
+        
+        logging.debug('rs: %s',np.array2string(lRankingScore))
+        logging.debug('exp f: %s',np.array2string(lExpF))
         for i in range(len(lRankingScore)):
+            logging.debug('sum left: %f',CurrentSum)
             ThisDocLoss = -lRankingScore[i] + log(CurrentSum)
             CurrentSum -= lExpF[i]
+            
             
             loss += ThisDocLoss
             
