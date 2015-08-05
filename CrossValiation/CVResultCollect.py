@@ -23,7 +23,7 @@ from cxBase.WalkDirectory import WalkDir
 
 def GetFileNames(InDir,PreName):
     lFName = WalkDir(InDir)
-    lRes = [name for name in lFName if name.startswiths(PreName)]
+    lRes = [name for name in lFName if name.startswith(PreName)]
     return lRes
 
 
