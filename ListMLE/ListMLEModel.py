@@ -58,7 +58,7 @@ class ListMLEModelC(object):
         logging.debug('first doc no [%s]',lQDocData[0].DocNo)
         logging.debug('rs: %s',np.array2string(lRankingScore))
         logging.debug('exp f: %s',np.array2string(lExpF))
-        for i in range(len(lRankingScore)):
+        for i in range(len(lRankingScore)-1):
             logging.debug('sum left: %f',CurrentSum)
             ThisDocLoss = -lRankingScore[i] + log(CurrentSum)
             CurrentSum -= lExpF[i]
@@ -93,6 +93,7 @@ class ListMLEModelC(object):
         
         res = np.mean([cls.PerQGradient(w,lQDocData,f,gf) for lQDocData in llQDocData],0)
 
+        logging.debug('w:\n %s',np.array2string(w))
         logging.debug('gradient %s',np.array2string(res))        
         return res
     
@@ -116,7 +117,7 @@ class ListMLEModelC(object):
         SumExpF = np.sum(lExpF)
         SumWeightedGf = np.sum(lExpFWeightedGf,0)
         
-        for i in range(len(lQDocData)):
+        for i in range(len(lQDocData)-1):
             ThisGradient = -lPerDocGf[i,:] + SumWeightedGf / SumExpF
             SumExpF -= lExpF[i]
             SumWeightedGf -= lExpFWeightedGf[i,:]
