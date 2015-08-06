@@ -104,7 +104,7 @@ class ListMLEModelC(object):
         
         #optimal order
         lQDocData.sort(key=lambda item:item.GetRelScore(),reverse = True)
-        
+        logging.debug('first doc no [%s]',lQDocData[0].DocNo)
         
         
         lPerDocGf = np.array([gf(w,data) for data in lQDocData])  #|doc| * |w| mtx
