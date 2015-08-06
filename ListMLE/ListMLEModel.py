@@ -55,7 +55,7 @@ class ListMLEModelC(object):
         lExpF = np.exp(lRankingScore)
         SumExpF = np.sum(lExpF)
         CurrentSum = SumExpF
-        
+        logging.debug('first doc no [%s]',lQDocData[0].DocNo)
         logging.debug('rs: %s',np.array2string(lRankingScore))
         logging.debug('exp f: %s',np.array2string(lExpF))
         for i in range(len(lRankingScore)):
