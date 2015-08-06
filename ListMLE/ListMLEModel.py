@@ -123,6 +123,7 @@ class ListMLEModelC(object):
         for i in range(len(lQDocData)-1):
             ThisGradient = -lPerDocGf[i,:] + SumWeightedGf / SumExpF
             SumExpF -= lExpF[i]
+            SumExpF = max(SumExpF,np.exp(-20))
             SumWeightedGf -= lExpFWeightedGf[i,:]
             res += ThisGradient
             
