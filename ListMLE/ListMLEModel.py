@@ -64,6 +64,8 @@ class ListMLEModelC(object):
             ThisDocLoss = -lRankingScore[i] + log(CurrentSum)
             CurrentSum -= lExpF[i]
             
+            CurrentSum = max(CurrentSum,np.exp(-20))
+            
             
             loss += ThisDocLoss
             
