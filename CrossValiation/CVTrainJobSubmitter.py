@@ -60,7 +60,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         cxBaseC.SetConf(self, ConfIn)
         self.workdir = self.conf.GetConf('workdir')
         if not os.path.exists(self.workdir):
-            os.mkdir(self.workdir)
+            os.makedirs(self.workdir)
         self.lCmd = self.conf.GetConf('cmd',self.lCmd)
         
         ParaInName = self.conf.GetConf('parafile')

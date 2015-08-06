@@ -54,7 +54,7 @@ class CVTestJobSubmitter(cxBaseC):
         cxBaseC.SetConf(self, ConfIn)
         self.workdir = self.conf.GetConf('workdir') + '/'
         if not os.path.exists(self.workdir):
-            os.mkdir(self.workdir)
+            os.makedirs(self.workdir)
         self.lCmd = self.conf.GetConf('cmd')
         if type(self.lCmd) != list:
             self.lCmd = [self.lCmd]
