@@ -38,7 +38,7 @@ class ListMLEModelC(object):
         '''
         
         l = np.mean([cls.PerQLoss(w,lQDocData,f) for lQDocData in llQDocData])
-        logging.info('loss %f',l)
+        logging.info('listmle loss %f',l)
         return l
     
 
@@ -55,10 +55,10 @@ class ListMLEModelC(object):
         lExpF = np.exp(lRankingScore)
         SumExpF = np.sum(lExpF)
         CurrentSum = SumExpF
-        logging.debug('first doc no [%s]',lQDocData[0].DocNo)
+        logging.debug('perq loss first doc no [%s]',lQDocData[0].DocNo)
         logging.debug('w:\n%s',np.array2string(w))
         logging.debug('rs: %s',np.array2string(lRankingScore))
-        logging.debug('exp f: %s',np.array2string(lExpF))
+#         logging.debug('exp f: %s',np.array2string(lExpF))
         for i in range(len(lRankingScore)-1):
 #             logging.debug('sum left: %f',CurrentSum)
             ThisDocLoss = -lRankingScore[i] + log(CurrentSum)
@@ -94,8 +94,8 @@ class ListMLEModelC(object):
         
         res = np.mean([cls.PerQGradient(w,lQDocData,f,gf) for lQDocData in llQDocData],0)
 
-        logging.debug('w:\n %s',np.array2string(w))
-        logging.debug('gradient %s',np.array2string(res))        
+#         logging.debug('w:\n %s',np.array2string(w))
+        logging.debug('listmle gradient %s',np.array2string(res))        
         return res
     
     
@@ -106,7 +106,7 @@ class ListMLEModelC(object):
         
         #optimal order
         lQDocData.sort(key=lambda item:item.GetRelScore(),reverse = True)
-        logging.debug('first doc no [%s]',lQDocData[0].DocNo)
+#         logging.debug('first doc no [%s]',lQDocData[0].DocNo)
         
         
         lPerDocGf = np.array([gf(w,data) for data in lQDocData])  #|doc| * |w| mtx
