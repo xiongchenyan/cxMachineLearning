@@ -46,7 +46,7 @@ def ReadGivenPartition(GivenPartitionIn):
     return lId
 
 
-def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' ',GivenPartition = '',GivenPartition=''):
+def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' ',GivenPartition = ''):
     lData = lLines
     if -1 != GroupKeyCol:
         lData = GroupByKey(lLines,GroupKeyCol,Spliter)
@@ -115,7 +115,7 @@ def CreateFolds(workdir,DataInName,K,GroupKeyCol=1,Spliter = '\t',GivenPartition
     
     lLines = open(DataInName).read().splitlines()
     logging.info('total [%d] lines', len(lLines))
-    lTrain,lTest = PartitionData(lLines, K, GroupKeyCol=GroupKeyCol, Spliter=Spliter,GivenPartitionIn)
+    lTrain,lTest = PartitionData(lLines, K, GroupKeyCol, Spliter,GivenPartitionIn)
     logging.info('data partitioned')
     for i in range(K):
         print >> lTrainFile[i], '\n'.join(lTrain[i])
