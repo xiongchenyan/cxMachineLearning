@@ -48,13 +48,13 @@ class CVTrainJobSubmitterC(cxBaseC):
         self.K = 5
         self.GroupKeyCol = 1
         self.Spliter = ' '
-        
+        self.PreGivenFoldInName = ""
         self.RunType = 'pipe'
         
     @staticmethod
     def ShowConf():
         cxBaseC.ShowConf()
-        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\nspliter\nruntype train|pipe\n"
+        print "in\nworkdir\nparafile\ncmd\nk\ngroupkeycol 1\nspliter\nruntype train|pipe\npregivenpartition"
         
     def SetConf(self, ConfIn):
         cxBaseC.SetConf(self, ConfIn)
@@ -73,6 +73,8 @@ class CVTrainJobSubmitterC(cxBaseC):
         
         self.RunType = self.conf.GetConf('runtype', self.RunType)
         
+        self.PreGivenFoldInName = self.conf.GetConf('pregivenpartition', self.PreGivenFoldInName)
+        
         logging.info('conf all loaded')
         
     
@@ -80,7 +82,7 @@ class CVTrainJobSubmitterC(cxBaseC):
         '''
         create folds
         '''   
-        CreateFolds(self.workdir,self.DataInName,self.K,self.GroupKeyCol,self.Spliter)
+        CreateFolds(self.workdir,self.DataInName,self.K,self.GroupKeyCol,self.Spliter,self.PreGivenFoldInName)
                
         return True
     

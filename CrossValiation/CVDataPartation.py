@@ -38,24 +38,45 @@ def DataSplit(lData,K,NeedDev = False):
     return llSplit
 
 
-def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' '):
+def ReadGivenPartition(GivenPartitionIn):
+    lId = []
+    if '' != GivenPartitionIn:
+        lLines = open(GivenPartitionIn).read().splitlines()
+        lId = [int(line) for line in lLines]
+    return lId
+
+
+def PartitionData(lLines,K,GroupKeyCol = -1,Spliter=' ',GivenPartition = '',GivenPartition=''):
     lData = lLines
     if -1 != GroupKeyCol:
         lData = GroupByKey(lLines,GroupKeyCol,Spliter)
         
+    lGivenPartition = ReadGivenPartition(GivenPartition)
+    
     
     lTrain = [[] for i in range(K)]
     lTest = [[] for i in range(K)]
     
-    for i in range(len(lData)):
-        for j in range(K):
-            if (i % K) == j:
-                lTest[j].append(lData[i])
-                logging.debug('[%d] in [%d] test',i,j)
-            else:
-                lTrain[j].append(lData[i])        
-                logging.debug('[%d] in [%d] train',i,j)
     
+    if [] != lGivenPartition:
+        logging.info('partition using given in [%s]',GivenPartition)
+        for i in range(len(lData)):
+            for j in range(K):
+                if (lGivenPartition[i] == j):
+                    lTest[j].append(lData[i])
+                    logging.debug('[%d] in [%d] test',i,j)
+                else:
+                    lTrain[j].append(lData[i])        
+                    logging.debug('[%d] in [%d] train',i,j)
+    else:
+        for i in range(len(lData)):
+            for j in range(K):
+                if (i % K) == j:
+                    lTest[j].append(lData[i])
+                    logging.debug('[%d] in [%d] test',i,j)
+                else:
+                    lTrain[j].append(lData[i])        
+                    logging.debug('[%d] in [%d] train',i,j)
     logging.debug('splited')
     
     if -1 != GroupKeyCol:
@@ -80,7 +101,7 @@ def GroupByKey(lLines,KeyCol,Spliter):
     logging.debug('[%d] lines grouped into [%d] group',len(lLines),len(lData))
     return lData
             
-def CreateFolds(workdir,DataInName,K,GroupKeyCol=1,Spliter = '\t'):
+def CreateFolds(workdir,DataInName,K,GroupKeyCol=1,Spliter = '\t',GivenPartitionIn = ''):
     '''
     create folds
     '''   
@@ -94,7 +115,7 @@ def CreateFolds(workdir,DataInName,K,GroupKeyCol=1,Spliter = '\t'):
     
     lLines = open(DataInName).read().splitlines()
     logging.info('total [%d] lines', len(lLines))
-    lTrain,lTest = PartitionData(lLines, K, GroupKeyCol=GroupKeyCol, Spliter=Spliter)
+    lTrain,lTest = PartitionData(lLines, K, GroupKeyCol=GroupKeyCol, Spliter=Spliter,GivenPartitionIn)
     logging.info('data partitioned')
     for i in range(K):
         print >> lTrainFile[i], '\n'.join(lTrain[i])
