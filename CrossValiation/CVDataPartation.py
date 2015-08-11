@@ -13,6 +13,8 @@ what's my output:
 
 import math
 import itertools,logging
+import json
+
 
 def DataSplit(lData,K,NeedDev = False):
     llSplit = []
@@ -41,7 +43,7 @@ def DataSplit(lData,K,NeedDev = False):
 def ReadGivenPartition(GivenPartitionIn):
     lId = []
     if '' != GivenPartitionIn:
-        lLines = open(GivenPartitionIn).read().splitlines()
+        lLines = json.load(open(GivenPartitionIn))
         lId = [int(line) for line in lLines]
     return lId
 
