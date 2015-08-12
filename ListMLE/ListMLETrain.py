@@ -24,15 +24,23 @@ import json
 import os,sys
 from ListMLEModel import ListMLEModelC
 
+class ListMLEDocC(object):
+    def __init__(self):
+        self.X = np.zeros([0,0])
+        self.rel = 0
+        self.DocNo = ""
+    
+    def GetRelScore(self):
+        return self.rel
 
 class ListMLETrainC(object):
     
     @classmethod
-    def Loss(cls, w, llQDocFeature):
+    def Loss(cls, w, llQDocData):
         '''
         each element is a numpy array
         '''
-        l = ListMLEModelC.Loss(w, llQDocFeature, cls.RankingScore)
+        l = ListMLEModelC.Loss(w, llQDocData, cls.RankingScore)
         
         logging.info('hccrf listmle loss %f',l)
         
@@ -43,23 +51,23 @@ class ListMLETrainC(object):
 
 
     @classmethod
-    def RankingScore(cls,w,X):
+    def RankingScore(cls,w,DocData):
         
-        score = X.dot(w)
+        score = DocData.X.dot(w)
         
         return score
 
 
     @classmethod
-    def Gradient(cls, theta, llGraphData):
-        gf = ListMLEModelC.Gradient(theta, llGraphData, cls.RankingScore, cls.RankingScoreGradient)
+    def Gradient(cls, theta, llQDocData):
+        gf = ListMLEModelC.Gradient(theta, llQDocData, cls.RankingScore, cls.RankingScoreGradient)
 
         return gf
         
     
     @classmethod
-    def RankingScoreGradient(cls,w,X):
-        return X
+    def RankingScoreGradient(cls,w,DocData):
+        return DocData.X
     
     
             

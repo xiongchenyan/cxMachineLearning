@@ -25,7 +25,7 @@ import logging
 from cxBase.Conf import cxConfC
 from AdhocEva.AdhocEva import AdhocEvaC
 from AdhocEva.AdhocMeasure import AdhocMeasureC
-from ListMLETrain import ListMLETrainC
+from ListMLETrain import ListMLETrainC,ListMLEDocC
 
 from HCCRF.HCCRFBase import HCCRFBaseC
 
@@ -43,15 +43,19 @@ class ListMLEPipeTrainTestEvaC(object):
         self.Learner = ListMLETrainC()
         
     
-
+    
+    def FormListMLEDoc(self,GraphData):
+        DocData = ListMLEDocC()
+        DocData.X = GraphData.NodeMtx[0,:]
+        DocData.DocNo = GraphData.DocNo
+        DocData.rel = GraphData.rel
     
     
     def ReadTargetQDocData(self,QIn,DataDir):
         llGraphData = HCCRFBaseC.ReadTargetGraphData(QIn,DataDir)
         
-        llQDocFeature = [ [GraphData.NodeMtx[0,:] for GraphData in lGraphData] for lGraphData in llGraphData]
-        llQDocNo = [ [GraphData.DocNo for GraphData in lGraphData] for lGraphData in llGraphData]
-        return llQDocNo,llQDocFeature
+        llQDocData= [ [self.FormListMLEDoc(GraphData) for GraphData in lGraphData] for lGraphData in llGraphData]
+        return llQDocData
     
     
             
@@ -68,8 +72,8 @@ class ListMLEPipeTrainTestEvaC(object):
         logging.info('pipe start training')
         
         
-        llTrainDocNo, llTrainQDocData = self.ReadTargetQDocData(TrainQueryIn,self.DataDir)
-        llTestDocNo, llTestQDocData = self.ReadTargetQDocData(TestQueryIn,self.DataDir)
+        llTrainQDocData = self.ReadTargetQDocData(TrainQueryIn,self.DataDir)
+        llTestQDocData = self.ReadTargetQDocData(TestQueryIn,self.DataDir)
         
         
         
@@ -79,8 +83,7 @@ class ListMLEPipeTrainTestEvaC(object):
         logging.info('pipe start testing')
         
         lQid = [line.split('\t')[0] for line in open(TestQueryIn).read().splitlines()]
-        llScore = [  [x.dot(w) for x in lTestQDocData] for lTestQDocData in llTestQDocData]
-        llDocScore = [zip(lDoc,lScore) for lDoc,lScore in zip(llTestDocNo,llScore)]
+        llDocScore = [ [[data.DocNo, data.X.dot(w)] for data in lTestQDocData] for lTestQDocData in llTestQDocData]
         
         
         logging.info('pipe start evaluating')
