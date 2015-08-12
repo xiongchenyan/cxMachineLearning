@@ -27,7 +27,7 @@ from AdhocEva.AdhocEva import AdhocEvaC
 from AdhocEva.AdhocMeasure import AdhocMeasureC
 from ListMLETrain import ListMLETrainC
 
-from HCCRFBase import HCCRFBaseC
+from HCCRF.HCCRFBase import HCCRFBaseC
 
 class ListMLEPipeTrainTestEvaC(object):
     
