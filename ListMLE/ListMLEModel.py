@@ -17,8 +17,8 @@ what's my output:
 '''
 
 import numpy as np
-# import scipy
-# from scipy.optimize import minimize
+import scipy
+from scipy.optimize import minimize
 import logging
 from math import log
 
@@ -128,8 +128,6 @@ class ListMLEModelC(object):
             res += ThisGradient
             
         return res
-        
-        
         
         
         
