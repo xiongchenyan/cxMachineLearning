@@ -75,7 +75,7 @@ class ListMLETrainC(object):
         '''
         call bfgs to train
         '''
-        WDim = llQDocData[0][0].shape[0]
+        WDim = llQDocData[0][0].X.shape[0]
         InitW = np.random.rand(WDim)
         
         TrainRes = minimize(self.Loss,InitW,\
