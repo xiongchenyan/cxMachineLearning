@@ -49,6 +49,7 @@ class ListMLEPipeTrainTestEvaC(object):
         DocData.X = GraphData.NodeMtx[0,:]
         DocData.DocNo = GraphData.DocNo
         DocData.rel = GraphData.rel
+        return DocData
     
     
     def ReadTargetQDocData(self,QIn,DataDir):
