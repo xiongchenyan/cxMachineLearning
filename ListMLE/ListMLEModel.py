@@ -64,7 +64,7 @@ class ListMLEModelC(object):
             ThisDocLoss = -lRankingScore[i] + log(CurrentSum)
             CurrentSum -= lExpF[i]
             
-            CurrentSum = max(CurrentSum,np.exp(-20))
+            CurrentSum = max(CurrentSum,np.exp(-100))
             
             
             loss += ThisDocLoss
@@ -123,7 +123,7 @@ class ListMLEModelC(object):
         for i in range(len(lQDocData)-1):
             ThisGradient = -lPerDocGf[i,:] + SumWeightedGf / SumExpF
             SumExpF -= lExpF[i]
-            SumExpF = max(SumExpF,np.exp(-20))
+            SumExpF = max(SumExpF,np.exp(-100))
             SumWeightedGf -= lExpFWeightedGf[i,:]
             res += ThisGradient
             
