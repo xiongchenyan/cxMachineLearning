@@ -40,9 +40,9 @@ def CombineEvaRes(lEvaInName,OutName):
 def Process(InDir, PreName, OutName):
     
     lFName = GetFileNames(InDir, PreName)
-    print 'loading res from\n %s' %('\n'.join(lFName))
+#     print 'loading res from\n %s' %('\n'.join(lFName))
     CombineEvaRes(lFName, OutName)
-    print "done"
+#     print "done"
     return
 
 
