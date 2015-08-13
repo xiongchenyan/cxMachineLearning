@@ -56,7 +56,7 @@ class FeatureProcessorC(object):
             if MaxScore == MinScore:
                 score = 0
             else:
-                score = (score - MinScore) / (MaxScore - MinScore)
+                score = (score - MinScore) / float(MaxScore - MinScore)
             hRes[key] = score
         return hRes
     
