@@ -33,7 +33,7 @@ def CombineEvaRes(lEvaInName,OutName):
     lEvaRes = AdhocMeasureC.AddMeanEva(lEvaRes)
     
     AdhocMeasureC.DumpPerQEva(OutName, lEvaRes)
-    print lEvaRes[-1][1].dumps()
+    print ntpath.basename(OutName) + ': ' + lEvaRes[-1][1].dumps()
     return True
 
 
