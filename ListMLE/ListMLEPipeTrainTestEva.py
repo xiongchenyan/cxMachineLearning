@@ -81,7 +81,7 @@ class ListMLEPipeTrainTestEvaC(object):
         
         w = self.Learner.Train(llTrainQDocData)
         
-        logging.info('trained w:\n%s',np.array2string(w))
+        logging.info('trained w:\n%s',np.array2string(w,precision=6))
         
         logging.info('pipe start testing')
         
