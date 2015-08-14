@@ -80,9 +80,9 @@ class ListMLETrainC(object):
         
         TrainRes = minimize(self.Loss,InitW,\
                             args=(llQDocData), \
-                            method='BFGS', \
+                            method='CG', \
                             jac=self.Gradient, \
-                            options = {'disp':True, 'gtol':1e-06}
+                            options = {'disp':True, 'gtol':1e-05}
                             )
         
 #         logging.info('training result message: [%s]',TrainRes.message)
