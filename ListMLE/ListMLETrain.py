@@ -71,7 +71,7 @@ class ListMLETrainC(object):
     
     
             
-    def Train(self,llQDocData):
+    def Train(self,llQDocData,method='BFGS',ConvergeThreshold=1e-05):
         '''
         call bfgs to train
         '''
@@ -80,9 +80,9 @@ class ListMLETrainC(object):
         
         TrainRes = minimize(self.Loss,InitW,\
                             args=(llQDocData), \
-                            method='CG', \
+                            method=method, \
                             jac=self.Gradient, \
-                            options = {'disp':True, 'gtol':1e-05}
+                            options = {'disp':True, 'gtol':ConvergeThreshold}
                             )
         
 #         logging.info('training result message: [%s]',TrainRes.message)

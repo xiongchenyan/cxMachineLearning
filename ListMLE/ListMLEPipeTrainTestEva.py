@@ -69,6 +69,8 @@ class ListMLEPipeTrainTestEvaC(object):
         conf.ParseParaStr(ParaStr)
         
         self.DataDir = conf.GetConf('datadir',self.DataDir)
+        OptMethod = conf.GetConf('optmethod','BFGS')
+        ConvergeThreshold = conf.GetConf('convergethreshold',1e-05)
         
         logging.info('pipe start training')
         
@@ -79,7 +81,7 @@ class ListMLEPipeTrainTestEvaC(object):
         
         
         
-        w = self.Learner.Train(llTrainQDocData)
+        w = self.Learner.Train(llTrainQDocData, OptMethod,ConvergeThreshold)
         
         logging.info('trained w:\n%s',np.array2string(w,precision=6))
         
@@ -117,7 +119,7 @@ if __name__ == '__main__':
     import sys
     if 5 != len(sys.argv):
         print "4 para: train q, test q , para str, out"
-        print 'parastr: datadir='
+        print 'parastr: datadir=,optmethod=BFGS,convergethreshold=1e-05'
         sys.exit()
         
     root = logging.getLogger()
