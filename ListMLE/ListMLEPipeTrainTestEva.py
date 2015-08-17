@@ -43,19 +43,19 @@ class ListMLEPipeTrainTestEvaC(object):
         self.Learner = ListMLETrainC()
         
     
-    
-    def FormListMLEDoc(self,GraphData):
+    @classmethod
+    def FormListMLEDoc(cls,GraphData):
         DocData = ListMLEDocC()
         DocData.X = GraphData.NodeMtx[0,:]
         DocData.DocNo = GraphData.DocNo
         DocData.rel = GraphData.rel
         return DocData
     
-    
-    def ReadTargetQDocData(self,QIn,DataDir):
+    @classmethod
+    def ReadTargetQDocData(cls,QIn,DataDir):
         llGraphData = HCCRFBaseC.ReadTargetGraphData(QIn,DataDir)
         
-        llQDocData= [ [self.FormListMLEDoc(GraphData) for GraphData in lGraphData] for lGraphData in llGraphData]
+        llQDocData= [ [cls.FormListMLEDoc(GraphData) for GraphData in lGraphData] for lGraphData in llGraphData]
         return llQDocData
     
     
