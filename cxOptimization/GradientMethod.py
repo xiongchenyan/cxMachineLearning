@@ -36,7 +36,7 @@ class GradientMethodC(object):
         
         
         w = np.array(InitW)
-        LastLoss = LossFunc(w,Para[0])
+        LastLoss = LossFunc(w,Para)
         MaxIte = 1000
         StepSize = 0.005
         DecayRate = 0.5
@@ -44,9 +44,9 @@ class GradientMethodC(object):
         logging.info('start with w: %s',np.array2string(w))
         logging.info('start loss: %f',LastLoss)
         for Ite in range(MaxIte):
-            Gw = GradientFunc(w,Para[0])
+            Gw = GradientFunc(w,Para)
             ThisW = w - StepSize * Gw
-            ThisLoss = LossFunc(ThisW,Para[0])
+            ThisLoss = LossFunc(ThisW,Para)
             logging.info('step [%d] loss [%f]',Ite,ThisLoss)
             if ThisLoss > LastLoss:
                 StepSize *= DecayRate
