@@ -44,8 +44,12 @@ class GradientMethodC(object):
         logging.info('start with w: %s',np.array2string(w))
         logging.info('start loss: %f',LastLoss)
         for Ite in range(MaxIte):
+            
             Gw = GradientFunc(w,Para)
+            
             ThisW = w - StepSize * Gw
+            logging.info('Gw:\n%f',np.array2string(Gw))
+            logging.info('NewW:\n%f',np.array2string(w))
             ThisLoss = LossFunc(ThisW,Para)
             logging.info('step [%d] loss [%f]',Ite,ThisLoss)
             if ThisLoss > LastLoss:
