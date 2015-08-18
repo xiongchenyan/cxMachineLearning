@@ -38,7 +38,8 @@ class LinearRankingC(object):
         
     def ReadPara(self,ParaIn):
         lLines = open(ParaIn).read().splitlines()
-        lPara = lLines[0].split()
+        lPara = [float(item) for item in lLines[0].split()]
+        
         return np.array(lPara)
         
             
@@ -55,9 +56,9 @@ class LinearRankingC(object):
         for lTestQDocData in llTestQDocData:
             lDocScore = []
             for data in lTestQDocData:
-                print 'w: %s' %(np.array2string(w))
-                print data.DocNo
-                print np.array2string(data.X)
+#                 print 'w: %s' %(np.array2string(w))
+#                 print data.DocNo
+#                 print np.array2string(data.X)
                 lDocScore.append([data.DocNo,data.X.dot(w)])
             llDocScore.append(lDocScore)
         
