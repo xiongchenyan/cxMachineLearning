@@ -27,7 +27,6 @@ from cxBase.Conf import cxConfC
 from AdhocEva.AdhocEva import AdhocEvaC
 from AdhocEva.AdhocMeasure import AdhocMeasureC
 from ListMLETrain import ListMLETrainC,ListMLEDocC
-
 from HCCRF.HCCRFBase import HCCRFBaseC
 import numpy as np
 class ListMLEPipeTrainTestEvaC(object):
