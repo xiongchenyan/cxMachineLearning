@@ -53,12 +53,14 @@ class GradientMethodC(object):
                 logging.info('hurt, decay stepsize to %f',StepSize)
                 continue
             
+            
+            ChangeRate = np.abs ( (ThisLoss - LastLoss) / LastLoss)
+
             LastLoss = ThisLoss
             w = ThisW
             
-            ChangeRate = np.abs ( (ThisLoss - LastLoss) / LastLoss)
             if ChangeRate < ConvergeThreshold:
-                logging.info('Change Rate [%f], converged',ChangeRate)
+                logging.info('Change Rate [%f < %f], converged',ChangeRate,ConvergeThreshold)
                 break
         
         res = GradientResC()
