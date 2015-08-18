@@ -35,7 +35,7 @@ class LinearRankingC(object):
         
         
     
-    def PipeRanking(self,TestQueryIn,ParaIn,OutPre):
+    def PipeRanking(self,TestQueryIn,ParaIn,OutName):
         llTestQDocData = ListMLEPipeTrainTestEvaC.ReadTargetQDocData(TestQueryIn,self.DataDir)
         w = self.ReadPara(ParaIn)
         
@@ -57,7 +57,7 @@ class LinearRankingC(object):
         lEvaRes.append(MeanEvaRes)
         lQid.append('mean')
         
-        out = open(OutPre,'w')
+        out = open(OutName,'w')
         for qid,EvaRes in zip(lQid,lEvaRes):
             print >>out, qid + '\t' + EvaRes.dumps()
             
@@ -66,10 +66,41 @@ class LinearRankingC(object):
         return True
     
     
-    def RankingForCVFolds(self,TestQPre,ParaPre,OutFold,K=10):
+    def RankingForCVFolds(self,TestQPre,ParaPre,OutPre,K=10):
         
-        
+        for i in range(K):
+            TestIn = TestQPre + '_%d' %(i)
+            ParaIn = ParaPre + '_%d' %(i)
+            OutName = OutPre + '_%d' %(i)
+            self.PipeRanking(TestIn, ParaIn, OutName)
+            logging.info('fold [%d] done',i)
         return
+        
+
+    
+    
+    
+
+if __name__ == '__main__':
+    import sys
+    if 5 != len(sys.argv):
+        print "4 para: test pre, para pre, out, k"
+        sys.exit()
+        
+    root = logging.getLogger()
+    root.setLevel(logging.INFO)
+    
+    ch = logging.StreamHandler(sys.stdout)
+#     ch.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    ch.setFormatter(formatter)
+    root.addHandler(ch)       
+
+        
+    Processor = LinearRankingC()
+    Processor.Process(sys.argv[1],sys.argv[2],sys.argv[3], sys.argv[4])    
+            
+        
         
         
         
