@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
         
     Processor = LinearRankingC()
-    Processor.RankingForCVFolds(sys.argv[1],sys.argv[2],sys.argv[3], sys.argv[4])    
+    Processor.RankingForCVFolds(sys.argv[1],sys.argv[2],sys.argv[3], int(sys.argv[4]))    
             
         
         
