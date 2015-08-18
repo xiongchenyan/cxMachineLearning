@@ -18,6 +18,7 @@ import site
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
 site.addsitedir('/bos/usr0/cx/PyCode/cxMachineLearning')
 
+import numpy as np
 from ListMLE.ListMLEPipeTrainTestEva import ListMLEPipeTrainTestEvaC
 from AdhocEva.AdhocEva import AdhocEvaC
 from AdhocEva.AdhocMeasure import AdhocMeasureC
@@ -33,7 +34,12 @@ class LinearRankingC(object):
         self.Evaluator.Prepare()
         self.DataDir = '/bos/usr0/cx/tmp/GraphRepresentation/GraphFeature/CW09GraphFeatures/EsdRankFeature/'
         
+    def ReadPara(self,ParaIn):
+        lLines = open(ParaIn).read().splitlines()
+        lPara = lLines[0].split()
+        return np.array(lPara)
         
+            
     
     def PipeRanking(self,TestQueryIn,ParaIn,OutName):
         llTestQDocData = ListMLEPipeTrainTestEvaC.ReadTargetQDocData(TestQueryIn,self.DataDir)
