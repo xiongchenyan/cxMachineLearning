@@ -63,7 +63,8 @@ class GradientMethodC(object):
         
         res = GradientFunc()
         res.x = w
-        res.fun = np.array([LastLoss])    
+#         res.fun = np.array([LastLoss])
+        res.fun = LastLoss    
         return res
                   
             

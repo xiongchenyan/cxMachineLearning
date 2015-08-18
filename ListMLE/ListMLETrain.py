@@ -99,7 +99,7 @@ class ListMLETrainC(object):
                                     )
             
             if (BestLoss == None) | (BestLoss > TrainRes.fun):
-                logging.info('[%d] random train get better res [%s]',ite, np.array2string(TrainRes.fun))
+                logging.info('[%d] random train get better res [%f]',ite, TrainRes.fun)
                 BestW = TrainRes.x
                 BestLoss = TrainRes.fun
         
