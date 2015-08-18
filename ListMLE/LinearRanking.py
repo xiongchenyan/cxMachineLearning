@@ -47,6 +47,8 @@ class LinearRankingC(object):
         llTestQDocData = ListMLEPipeTrainTestEvaC.ReadTargetQDocData(TestQueryIn,self.DataDir)
         w = self.ReadPara(ParaIn)
         
+        logging.debug('type [%s] [%s]',type(llTestQDocData),type(llTestQDocData[0]))
+        
         lQid = [line.split('\t')[0] for line in open(TestQueryIn).read().splitlines()]
         llDocScore = [ [[data.DocNo, data.X.dot(w)] for data in lTestQDocData] for lTestQDocData in llTestQDocData]
         
