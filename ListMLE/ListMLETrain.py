@@ -86,7 +86,7 @@ class ListMLETrainC(object):
             logging.info('start %d random training',ite)
             if method == 'GD':
                 TrainRes = GradientMethodC().GradientDecent(self.Loss, InitW, \
-                                                            llQDocData, \
+                                                            (llQDocData), \
                                                             self.Gradient, \
                                                             ConvergeThreshold)
                 
