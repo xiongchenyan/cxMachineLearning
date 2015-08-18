@@ -79,7 +79,7 @@ class ListMLETrainC(object):
         
         BestW = np.zeros(WDim)
         BestLoss = None
-        RandomTime = 10
+        RandomTime = 1
         
         for ite in range(RandomTime):
             InitW = np.random.rand(WDim)
