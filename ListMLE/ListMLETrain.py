@@ -83,7 +83,7 @@ class ListMLETrainC(object):
         
         for ite in range(RandomTime):
             InitW = np.random.rand(WDim)
-            logging.info('start %d random training',InitW)
+            logging.info('start %d random training',ite)
             if method == 'GD':
                 TrainRes = GradientMethodC().GradientDecent(self.Loss, InitW, \
                                                             llQDocData, \
