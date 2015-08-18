@@ -47,11 +47,16 @@ class LinearRankingC(object):
         llTestQDocData = ListMLEPipeTrainTestEvaC.ReadTargetQDocData(TestQueryIn,self.DataDir)
         w = self.ReadPara(ParaIn)
         
-        logging.debug('type [%s] [%s]',type(llTestQDocData),type(llTestQDocData[0]))
         
         lQid = [line.split('\t')[0] for line in open(TestQueryIn).read().splitlines()]
-        llDocScore = [ [[data.DocNo, data.X.dot(w)] for data in lTestQDocData] for lTestQDocData in llTestQDocData]
+#         llDocScore = [ [ [data.DocNo, data.X.dot(w)] for data in lTestQDocData] for lTestQDocData in llTestQDocData]
         
+        llDocScore = []
+        for lTestQDocData in llTestQDocData:
+            lDocScore = []
+            for data in lTestQDocData:
+                lDocScore.append([data.DocNo,data.X.dot(w)])
+            llDocScore.append(lDocScore)
         
         logging.info('pipe start evaluating')
         
@@ -98,7 +103,7 @@ if __name__ == '__main__':
         sys.exit()
         
     root = logging.getLogger()
-    root.setLevel(logging.DEBUG)
+    root.setLevel(logging.INFO)
     
     ch = logging.StreamHandler(sys.stdout)
 #     ch.setLevel(logging.INFO)
