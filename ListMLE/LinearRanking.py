@@ -16,7 +16,7 @@ what's my output:
 import site
 
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
-site.addsitedir('/bos/usr0/cx/PyCode/GraphRepresentation')
+site.addsitedir('/bos/usr0/cx/PyCode/cxMachineLearning')
 
 from ListMLE.ListMLEPipeTrainTestEva import ListMLEPipeTrainTestEvaC
 from AdhocEva.AdhocEva import AdhocEvaC
