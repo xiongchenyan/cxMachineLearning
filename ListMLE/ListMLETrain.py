@@ -76,16 +76,25 @@ class ListMLETrainC(object):
         call bfgs to train
         '''
         WDim = llQDocData[0][0].X.shape[0]
-        InitW = np.random.rand(WDim)
         
-        TrainRes = minimize(self.Loss,InitW,\
-                            args=(llQDocData), \
-                            method=method, \
-                            jac=self.Gradient, \
-                            options = {'disp':True, 'gtol':ConvergeThreshold}
-                            )
+        BestW = np.zeros(WDim)
+        BestLoss = None
+        RandomTime = 10
         
-#         logging.info('training result message: [%s]',TrainRes.message)
+        for ite in range(RandomTime):
+            InitW = np.random.rand(WDim)
+            logging.info('start %d random training',InitW)
+            TrainRes = minimize(self.Loss,InitW,\
+                                args=(llQDocData), \
+                                method=method, \
+                                jac=self.Gradient, \
+                                options = {'disp':True, 'gtol':ConvergeThreshold}
+                                )
+            
+            if (BestLoss == None) | (BestLoss > TrainRes.fun):
+                logging.info('[%d] random train get better res [%f]',ite, TrainRes.fun)
+                BestW = TrainRes.x
+                BestLoss = TrainRes.fun
         
-        return TrainRes.x
+        return BestW
 
