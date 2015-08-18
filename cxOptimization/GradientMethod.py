@@ -61,7 +61,7 @@ class GradientMethodC(object):
                 logging.info('Change Rate [%f], converged',ChangeRate)
                 break
         
-        res = GradientFunc()
+        res = GradientResC()
         res.x = w
 #         res.fun = np.array([LastLoss])
         res.fun = LastLoss    
