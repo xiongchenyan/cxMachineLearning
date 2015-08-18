@@ -17,9 +17,11 @@ import site
 
 site.addsitedir('/bos/usr0/cx/PyCode/cxPyLib')
 site.addsitedir('/bos/usr0/cx/PyCode/cxMachineLearning')
+site.addsitedir('/bos/usr0/cx/PyCode/GraphRepresentation')
 
 import numpy as np
 from ListMLE.ListMLEPipeTrainTestEva import ListMLEPipeTrainTestEvaC
+from ListMLETrain import ListMLEDocC
 from AdhocEva.AdhocEva import AdhocEvaC
 from AdhocEva.AdhocMeasure import AdhocMeasureC
 import logging
