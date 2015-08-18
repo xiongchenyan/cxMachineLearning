@@ -23,7 +23,7 @@ from math import log,sqrt,pi
 import json
 import os,sys
 from ListMLEModel import ListMLEModelC
-
+from cxOptimization.GradientMethod import GradientMethodC,GradientResC
 class ListMLEDocC(object):
     def __init__(self):
         self.X = np.zeros([0,0])
@@ -84,15 +84,22 @@ class ListMLETrainC(object):
         for ite in range(RandomTime):
             InitW = np.random.rand(WDim)
             logging.info('start %d random training',InitW)
-            TrainRes = minimize(self.Loss,InitW,\
-                                args=(llQDocData), \
-                                method=method, \
-                                jac=self.Gradient, \
-                                options = {'disp':True, 'gtol':ConvergeThreshold}
-                                )
+            if method == 'GD':
+                TrainRes = GradientMethodC().GradientDecent(self.Loss, InitW, \
+                                                            llQDocData, \
+                                                            self.Gradient, \
+                                                            ConvergeThreshold)
+                
+            else:
+                TrainRes = minimize(self.Loss,InitW,\
+                                    args=(llQDocData), \
+                                    method=method, \
+                                    jac=self.Gradient, \
+                                    options = {'disp':True, 'gtol':ConvergeThreshold}
+                                    )
             
             if (BestLoss == None) | (BestLoss > TrainRes.fun):
-                logging.info('[%d] random train get better res [%f]',ite, TrainRes.fun)
+                logging.info('[%d] random train get better res [%s]',ite, np.array2string(TrainRes.fun))
                 BestW = TrainRes.x
                 BestLoss = TrainRes.fun
         
