@@ -139,7 +139,16 @@ class LeToRDataBaseC(object):
                 llLeToRData.append([])
                 LastQid = data.qid
             llLeToRData[-1].append(data)
-        return llLeToRData    
+        return llLeToRData
+    
+    
+    @staticmethod
+    def MergeRankingScoreAsNewFeature(SVMInName,NewRankingIn,OutName):
+        '''
+        TBD
+        '''
+        return
+            
         
         
             
