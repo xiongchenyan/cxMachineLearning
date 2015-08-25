@@ -21,9 +21,11 @@ from AdhocEva.AdhocMeasure import AdhocMeasureC
 import ntpath
 from cxBase.WalkDirectory import WalkDir
 
-def GetFileNames(InDir,PreName):
-    lFName = WalkDir(InDir)
-    lRes = [name for name in lFName if ntpath.basename(name).startswith(PreName)]
+def GetFileNames(InDir,PreName,k):
+#     lFName = WalkDir(InDir)
+#     lRes = [name for name in lFName if ntpath.basename(name).startswith(PreName)]
+    lRes = [PreName + '_%d' %(i) for i in range(k)]
+    
     return lRes
 
 
@@ -37,9 +39,9 @@ def CombineEvaRes(lEvaInName,OutName):
     return True
 
 
-def Process(InDir, PreName, OutName):
+def Process(InDir, PreName, OutName,k):
     
-    lFName = GetFileNames(InDir, PreName)
+    lFName = GetFileNames(InDir, PreName,k)
 #     print 'loading res from\n %s' %('\n'.join(lFName))
     CombineEvaRes(lFName, OutName)
 #     print "done"
@@ -48,14 +50,17 @@ def Process(InDir, PreName, OutName):
 
 import sys
 
-if 4 != len(sys.argv):
+if 4 > len(sys.argv):
     print 'collect ranking eva res'
-    print '3 para: InDir + PreName + OutName'
+    print '3 or 4 para: InDir + PreName + OutName + k(10)'
     sys.exit()
     
     
+k = 10
+if len(sys.argv) > 4:
+    k= int(sys.argv[4])
 
-Process(sys.argv[1], sys.argv[2], sys.argv[3])
+Process(sys.argv[1], sys.argv[2], sys.argv[3],k)
     
     
     
