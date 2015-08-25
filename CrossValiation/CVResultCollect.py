@@ -24,7 +24,7 @@ from cxBase.WalkDirectory import WalkDir
 def GetFileNames(InDir,PreName,k):
 #     lFName = WalkDir(InDir)
 #     lRes = [name for name in lFName if ntpath.basename(name).startswith(PreName)]
-    lRes = [PreName + '_%d' %(i) for i in range(k)]
+    lRes = [InDir + '/' + PreName + '_%d' %(i) for i in range(k)]
     
     return lRes
 
