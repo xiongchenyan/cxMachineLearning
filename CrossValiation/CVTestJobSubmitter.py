@@ -81,7 +81,11 @@ class CVTestJobSubmitter(cxBaseC):
                     logging.error('result file [%s] not exists',fname)
                     continue
                 
-                ThisScore = float(open(fname).read().splitlines()[0])
+                lScoreLine = open(fname).read().splitlines()
+                if [] == lScoreLine:
+                    logging.error('result file [%s] is empty',fname)
+                    continue
+                ThisScore = float(lScoreLine[0])
                 if (MaxP == -1) | (MaxRes < ThisScore):
                     MaxRes = ThisScore
                     MaxP = j
