@@ -56,8 +56,7 @@ class CVTestJobSubmitter(cxBaseC):
         if not os.path.exists(self.workdir):
             os.makedirs(self.workdir)
         self.lCmd = self.conf.GetConf('cmd')
-        if type(self.lCmd) != list:
-            self.lCmd = [self.lCmd]
+
         
         ParaInName = self.conf.GetConf('parafile')
         self.lParaStr = open(ParaInName).read().splitlines()
