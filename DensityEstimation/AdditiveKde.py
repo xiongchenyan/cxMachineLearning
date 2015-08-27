@@ -44,7 +44,7 @@ class AdditiveKdeC(object):
         
         dim = lX.shape[1]
         
-        self.lKde = [KernelDensity(bandwidth=self.Bandwidth).fit(lX[:,i]) for i in range(dim) ]
+        self.lKde = [KernelDensity(bandwidth=self.Bandwidth).fit(lX[:,i].reshape(lX.shape[0],1)) for i in range(dim) ]
         return True
         
     
