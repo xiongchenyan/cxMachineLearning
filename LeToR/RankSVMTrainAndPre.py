@@ -80,9 +80,10 @@ if __name__ == '__main__':
     root.setLevel(logging.INFO)
     
     ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(logging.INFO)
+    ch.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    ch.setFormatter(formatter)    
+    ch.setFormatter(formatter)
+    root.addHandler(ch)  
         
     processor = RankSVMTrainAndPreC(sys.argv[1])
     processor.Process(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
